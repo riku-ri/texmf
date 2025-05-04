@@ -1,6 +1,6 @@
 # texmf
 
-## [`cfont.tex`](cfont.tex)
+## [`tex/cfont.tex`](tex/cfont.tex)
 
 A simple wrapper of luatexja.
 
@@ -10,7 +10,7 @@ luatexja 提供了 `\jfont` 设置字体，
 但是通过 `jfont` 设置的字体只对非 ASCII 字符生效。
 
 基于 `\jfont` `\font` 已经能够处理绝大多数字体操作,
-[`cfont.tex`](cfont.tex) 主要解决一些不方便的地方：
+[`tex/cfont.tex`](tex/cfont.tex) 主要解决一些不方便的地方：
 - 中英文需要相同的字体时需要既执行 `\jfont` 又执行 `\font`
 - 字体尺寸会绑定到字体指令上，例如 `\jfont\newfont=[HaranoAjiGothic-Regular.otf] at 10pt`
 	后 `\newfont` 会始终为 `10pt` 大小，
