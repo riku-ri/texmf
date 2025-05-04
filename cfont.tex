@@ -1,0 +1,85 @@
+\input luatexja.sty%
+%%%
+\expandafter\newtoks\csname\string\afont\endcsname%
+\expandafter\newtoks\csname\string\ufont\endcsname%
+%%%
+\def\notcsname#1{\csname\string\notcsname\expandafter\endcsname#1\relax}%
+\expandafter\def\csname\string\notcsname\endcsname#1#2\relax{#2}%
+\def\untilgroup#1#2{#1}%
+\def\afont#1=#2|#3{% ascii font
+\expandafter\ifx\csname\string\font[\string#1]\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string\font[\string#1]\endcsname\else\relax\fi%
+\csname\string\font[\string#1]\endcsname={#2}%
+\expandafter\font\csname\string\font\string#1\endcsname={#2} at #3\relax%
+\expandafter\ifx\csname\string#1\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string#1\endcsname\else\relax\fi%
+\csname\string#1\endcsname={\csname\string\font\string#1\endcsname}%
+\expandafter\ifx\csname\string\afont\string\fontname\string#1\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string\afont\string\fontname\string#1\endcsname\else\relax\fi%
+\csname\string\afont\string\fontname\string#1\endcsname={#2}%
+\edef#1{\the\csname\string#1\endcsname\csname\string\afont\endcsname={\expandafter\notcsname\string#1}}%
+}%
+\def\ufont#1=#2|#3{% ascii font
+\expandafter\ifx\csname\string\jfont[\string#1]\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string\jfont[\string#1]\endcsname\else\relax\fi%
+\csname\string\jfont[\string#1]\endcsname={#2}%
+\expandafter\jfont\csname\string\jfont\string#1\endcsname={#2} at #3\relax%
+\expandafter\ifx\csname\string#1\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string#1\endcsname\else\relax\fi%
+\expandafter\ifx\csname\string\ufont\string\fontname\string#1\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string\ufont\string\fontname\string#1\endcsname\else\relax\fi%
+\csname\string\ufont\string\fontname\string#1\endcsname={#2}%
+\csname\string#1\endcsname={\csname\string\jfont\string#1\endcsname}%
+\edef#1{\the\csname\string#1\endcsname\csname\string\ufont\endcsname={\expandafter\notcsname\string#1}}%
+}%
+\def\cfont#1=#2|#3{% both ascii font and unicode font
+\afont#1=#2|{#3}\relax%
+\ufont#1=#2|{#3}\relax%
+\csname\string#1\endcsname={\csname\string\font\string#1\endcsname\csname\string\jfont\string#1\endcsname}%
+\edef#1{\the\csname\string#1\endcsname\csname\string\afont\endcsname={\expandafter\notcsname\string#1}\csname\string\ufont\endcsname={\expandafter\notcsname\string#1}}%
+}%
+\def\afontsize#1{%
+\expandafter\ifx\csname\the\csname\string\afont\endcsname\endcsname\relax%
+\message{^^J[\string\fontsize]\string\afont\space is not set^^J}%
+\else%
+\expandafter\cfont\csname\the\csname\string\afont\endcsname\expandafter\endcsname\expandafter=\the\csname\string\afont\string\fontname\expandafter\string\csname\the\csname\string\afont\endcsname\endcsname\endcsname|{#1}%
+\csname\the\csname\string\afont\endcsname\endcsname%
+\fi%
+}%
+\def\ufontsize#1{%
+\expandafter\ifx\csname\the\csname\string\ufont\endcsname\endcsname\relax%
+\message{^^J[\string\fontsize]\string\ufont\space is not set^^J}%
+\else%
+\expandafter\cfont\csname\the\csname\string\ufont\endcsname\expandafter\endcsname\expandafter=\the\csname\string\ufont\string\fontname\expandafter\string\csname\the\csname\string\ufont\endcsname\endcsname\endcsname|{#1}%
+\csname\the\csname\string\ufont\endcsname\endcsname%
+\fi%
+}%
+\def\fontsize#1{\afontsize{#1}\ufontsize{#1}}%
+%
+\gdef\tiny{5pt}%
+\gdef\scriptsize{7pt}%
+\gdef\footnotesize{8pt}%
+\gdef\small{9pt}%
+\gdef\normalsize{10pt}%
+\gdef\large{12pt}%
+\gdef\Large{14.4pt}%
+\gdef\LARGE{17.28pt}%
+\gdef\huge{20.74pt}%
+\gdef\Huge{24.88pt}%
+\gdef\BACKGROUND{51.60pt}%
+%%
+%% test case: [msmincho] and [simsun] font is required
+%\hrule\vskip2em
+%\begingroup\obeylines\endlinechar=\active\relax
+%\ufont\a=[msmincho.ttc]|{20pt}\relax
+%\fontsize{8pt}
+%\a
+%%\expandafter\cfont\csname\the\csname\string\afont\endcsname\endcsname=[lulix-mono]|{50pt}
+%%\the\csname\string\afont\string\fontname\expandafter\string\csname\the\csname\string\afont\endcsname\endcsname\endcsname
+%%\expandafter\ufont\csname\the\csname\string\afont\endcsname\expandafter\endcsname\expandafter=\the\csname\string\afont\string\fontname\expandafter\string\csname\the\csname\string\afont\endcsname\endcsname\endcsname|{50pt}
+%\a
+%睦ちゃん　死んちゃったよ
+%ギターＣ和弦　全部ーできない
+%Ave Mujika　長く続かない
+%\begingroup
+%\cfont\b=[simsun.ttc]|{20pt}\relax
+%\b
+%Note: 以上歌词出自 bilibili 视频《大耳朵睦睦》
+%\endgroup
+%可以切换上面的 \string\ufont 、字体大小、字体名称进行测试
+%\endgroup
+%\hrule\par\bye
