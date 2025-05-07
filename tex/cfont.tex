@@ -35,6 +35,7 @@
 \relax%
 \else% content of this toks is only set after run \afont
 \csname\string\fontsize\endcsname\font{#1}%
+\csname\the\csname^\string\font\endcsname\endcsname%
 \fi%
 }%
 \def\ufontsize#1{
@@ -42,6 +43,7 @@
 \message{^^J[\string\ufontsize] unicode font did not set by \string\ufont^^J}%
 \else% content of this toks is only set after run \afont
 \csname\string\fontsize\endcsname\jfont{#1}%
+\csname\the\csname^\string\font\endcsname\endcsname%
 \fi%
 }%
 \def\fontsize#1{\afontsize{#1}\ufontsize{#1}}%
