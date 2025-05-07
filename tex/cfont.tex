@@ -38,7 +38,7 @@
 \csname\the\csname^\string\font\endcsname\endcsname%
 \fi%
 }%
-\def\ufontsize#1{
+\def\ufontsize#1{%
 \expandafter\ifx\csname\the\csname^\string\jfont\endcsname\endcsname\relax%
 \message{^^J[\string\ufontsize] unicode font did not set by \string\ufont^^J}%
 \else% content of this toks is only set after run \afont

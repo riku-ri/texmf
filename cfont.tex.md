@@ -45,3 +45,25 @@ luatexja 提供了 `\jfont` 设置字体，
 - 定义了一些类似 LaTeX 的尺寸，例如 `\tiny`
 	- 这些尺寸定义是纯数值，和 LaTeX 中的用法不同，
 		需要配合 fontsize 系列指令使用，例如 `\ufontsize\tiny`
+
+#### 在 group 中定义全局字体
+
+```latex
+\begingroup%
+%%%
+\gdef\newfont{%
+\cfont\newfont=[LXGWWenKaiMonoGB-Regular]|{10pt}%
+\newfont%
+}% 中英相同字体
+%%%
+\gdef\splitfont{%
+\afont\splitfont=[cmunss]|{10pt}%
+\ufont\splitfont=[LXGWWenKaiMonoGB-Regular]|{12pt}%
+\splitfont%
+}% 中英不同字体
+%%%
+\endgroup%
+
+\newfont\splitfont
+% \endgroup 后此处\newfont、\splitfont、\fontsize等指令仍然生效
+```
