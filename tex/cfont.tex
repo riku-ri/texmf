@@ -7,7 +7,6 @@
 \expandafter\def\csname\string\notcsname\endcsname#1#2\relax{#2}%
 %
 \expandafter\def\csname\string\FONT\endcsname#1#2=#3|#4{%
-\expandafter#1\csname\string#1\string#2\endcsname={#3} at #4\relax%
 \expandafter\ifx\csname\string#2\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string#2\endcsname\else\relax\fi%
 \csname\string#2\endcsname={\csname\string\font\string#2\endcsname\csname\string\jfont\string#2\endcsname}%
 \expandafter\ifx\csname\string#1\string\fontname\string#2\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string#1\string\fontname\string#2\endcsname\else\relax\fi%
@@ -17,6 +16,7 @@
 \expandafter\edef\csname!\string\font\endcsname{\the\csname^\string\jfont\endcsname}%
 \expandafter\edef\csname!\string\jfont\endcsname{\the\csname^\string\font\endcsname}%
 \edef#2{%
+\expandafter#1\csname\string#1\string#2\endcsname={#3} #4\relax%
 \the\csname\string#2\endcsname%
 \csname^\string\font\endcsname={\csname!\string\jfont\endcsname}%
 \csname^\string\jfont\endcsname={\csname!\string\font\endcsname}%
@@ -48,17 +48,17 @@
 }%
 \def\fontsize#1{\afontsize{#1}\ufontsize{#1}}%
 %%%
-\def\tiny{5pt}%
-\def\scriptsize{7pt}%
-\def\footnotesize{8pt}%
-\def\small{9pt}%
-\def\normalsize{10pt}%
-\def\large{12pt}%
-\def\Large{14.4pt}%
-\def\LARGE{17.28pt}%
-\def\huge{20.74pt}%
-\def\Huge{24.88pt}%
-\def\BACKGROUND{51.60pt}%
+\def\tiny{at 5pt}%
+\def\scriptsize{at 7pt}%
+\def\footnotesize{at 8pt}%
+\def\small{at 9pt}%
+\def\normalsize{at 10pt}%
+\def\large{at 12pt}%
+\def\Large{at 14.4pt}%
+\def\LARGE{at 17.28pt}%
+\def\huge{at 20.74pt}%
+\def\Huge{at 24.88pt}%
+\def\BACKGROUND{at 51.60pt}%
 %%
 %% test case: [msmincho] and [simsun] font is required
 %\hrule\vskip2em
@@ -74,10 +74,10 @@
 %%%\expandafter\showthe\csname^\string\jfont\endcsname
 %%%\expandafter\show\csname!\string\font\endcsname
 %%%%
-%\ufont\a=[lulix-monoflow.ttf]|{15pt}\relax
-%\afont\a=[msmincho.ttc]|{30pt}\relax
+%\ufont\a=[lulix-monoflow.ttf]|{at 15pt}\relax
+%\afont\a=[msmincho.ttc]|{at 30pt}\relax
 %%\cfont\a=[msmincho.ttc]|{30pt}\relax
-%\afontsize\BACKGROUND
+%\afontsize{scaled 5000}
 %%\afontsize\BACKGROUND
 %%\ufontsize\tiny
 %%%%

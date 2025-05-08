@@ -18,10 +18,18 @@ luatexja 提供了 `\jfont` 设置字体，
 
 ### 用法
 
+
 - `\afont`
-	- 例如 `\afont\newfont=[HaranoAjiGothic-Regular.otf]|{12pt}`
+	- 例如 `\afont\newfont=[HaranoAjiGothic-Regular.otf]|{at 12pt}`
 		- 效果基本上等同于 `\font\newfont=[HaranoAjiGothic-Regular.otf] at 12pt`，
 			但会设置一些寄存器以便同时设置中英字体、更改字体大小等
+	> TeX 中有两种定义字体尺寸的数值：`at` 和 `scaled` ，
+	> 且这两种数值的单位并不一样。
+	> 因此使用到尺寸的地方需要指明 `at` 或 `scaled` ，例如上面的 `{at 12pt}`。
+	> 如果想使用字体的默认尺寸，可以设置为空：
+	> ```latex
+	> \afont\newfont=[HaranoAjiGothic-Regular.otf]|{}
+	> ```
 	- 字体尺寸外的括号 `{}` 不可省略
 	- 由于 luatex `\font` 本身的实现问题，`\newfont` 只对 ASCII 字符生效
 - `\ufont`
@@ -31,15 +39,15 @@ luatexja 提供了 `\jfont` 设置字体，
 	- 格式、用法、效果基本等同于 `\afont` `\ufont` ，
 		但是对所有字符都生效，不区分 ASCII/unicode
 - `\afontsize`
-	- 例如 `\afontsize{20pt}` 会保持当前字体同时调整大小为 `20pt`
+	- 例如 `\afontsize{at 20pt}` 会保持当前字体同时调整大小为 `20pt`
 	- 字体尺寸外的括号 `{}` 不可省略
 	- 如果之前没有通过 `\afont` 或 `\cfont` 设置过 ASCII 字体，会在 log 中提示并且无其它效果
 - `\ufontsize`
-	- 例如 `\ufontsize{20pt}` 会保持当前字体同时调整大小为 `20pt`
+	- 例如 `\ufontsize{at 20pt}` 会保持当前字体同时调整大小为 `20pt`
 	- 字体尺寸外的括号 `{}` 不可省略
 	- 如果之前没有通过 `\ufont` 或 `\cfont` 设置过 unicode 字体，会在 log 中提示并且无其它效果
 - `\fontsize`
-	- 例如 `\fontsize{20pt}` 会保持当前字体同时调整大小为 `20pt`
+	- 例如 `\fontsize{at 20pt}` 会保持当前字体同时调整大小为 `20pt`
 	- 会同时尝试调整 ASCII 和 unicode 字体，
 		ASCII/unicode 中的任一类未设置过时会在 log 中提示并对该类字体无效
 - 定义了一些类似 LaTeX 的尺寸，例如 `\tiny`
@@ -52,13 +60,13 @@ luatexja 提供了 `\jfont` 设置字体，
 \begingroup%
 %%%
 \gdef\newfont{%
-\cfont\newfont=[LXGWWenKaiMonoGB-Regular]|{10pt}%
+\cfont\newfont=[LXGWWenKaiMonoGB-Regular]|{at 10pt}%
 \newfont%
 }% 中英相同字体
 %%%
 \gdef\splitfont{%
-\afont\splitfont=[cmunss]|{10pt}%
-\ufont\splitfont=[LXGWWenKaiMonoGB-Regular]|{12pt}%
+\afont\splitfont=[cmunss]|{at 10pt}%
+\ufont\splitfont=[LXGWWenKaiMonoGB-Regular]|{at 12pt}%
 \splitfont%
 }% 中英不同字体
 %%%
