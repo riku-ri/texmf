@@ -2,11 +2,14 @@
 %%%
 \expandafter\newtoks\csname^\string\font\endcsname%
 \expandafter\newtoks\csname^\string\jfont\endcsname%
+\expandafter\newtoks\csname\string\font\string\fontsize\endcsname%
+\expandafter\newtoks\csname\string\jfont\string\fontsize\endcsname%
 %%%
 \def\notcsname#1{\csname\string\notcsname\expandafter\endcsname#1\relax}%
 \expandafter\def\csname\string\notcsname\endcsname#1#2\relax{#2}%
 %
-\expandafter\def\csname\string\FONT\endcsname#1#2=#3|#4{%
+\expandafter\def\csname\string\FONT\endcsname#1#2=#3{%
+\expandafter#1\csname\string#1\string#2\endcsname={#3} \the\csname\string#1\string\fontsize\endcsname\relax%
 \expandafter\ifx\csname\string#2\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string#2\endcsname\else\relax\fi%
 \csname\string#2\endcsname={\csname\string\font\string#2\endcsname\csname\string\jfont\string#2\endcsname}%
 \expandafter\ifx\csname\string#1\string\fontname\string#2\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string#1\string\fontname\string#2\endcsname\else\relax\fi%
@@ -16,18 +19,18 @@
 \expandafter\edef\csname!\string\font\endcsname{\the\csname^\string\jfont\endcsname}%
 \expandafter\edef\csname!\string\jfont\endcsname{\the\csname^\string\font\endcsname}%
 \edef#2{%
-\expandafter#1\csname\string#1\string#2\endcsname={#3} #4\relax%
 \the\csname\string#2\endcsname%
 \csname^\string\font\endcsname={\csname!\string\jfont\endcsname}%
 \csname^\string\jfont\endcsname={\csname!\string\font\endcsname}%
 }%
 }%
-\def\afont#1=#2|#3{\csname\string\FONT\endcsname\font#1=#2|{#3}}% ascii font
-\def\ufont#1=#2|#3{\csname\string\FONT\endcsname\jfont#1=#2|{#3}}% unicode font
+\def\afont#1=#2|#3{\csname\string\FONT\endcsname\font#1={#2}}% ascii font
+\def\ufont#1=#2|#3{\csname\string\FONT\endcsname\jfont#1={#2}}% unicode font
 \def\cfont#1=#2|#3{\afont#1=#2|{#3}\ufont#1=#2|{#3}}% both
 \expandafter\def\csname\string\fontsize\endcsname#1#2{%
+\csname\string#1\string\fontsize\endcsname={#2}%
 \csname\string\FONT\expandafter\endcsname\expandafter#1\csname\the\csname^\string#1\endcsname\expandafter\endcsname\expandafter=%
-\the\csname\string#1\string\fontname\expandafter\string\csname\the\csname^\string#1\endcsname\endcsname\endcsname|{#2}%
+{\the\csname\string#1\string\fontname\expandafter\string\csname\the\csname^\string#1\endcsname\endcsname\endcsname \the\csname\string#1\string\fontsize\endcsname}%
 }%
 \def\afontsize#1{%
 \expandafter\ifx\csname\the\csname^\string\font\endcsname\endcsname\relax%

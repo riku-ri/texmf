@@ -18,7 +18,6 @@ luatexja 提供了 `\jfont` 设置字体，
 
 ### 用法
 
-
 - `\afont`
 	- 例如 `\afont\newfont=[HaranoAjiGothic-Regular.otf]|{at 12pt}`
 		- 效果基本上等同于 `\font\newfont=[HaranoAjiGothic-Regular.otf] at 12pt`，
