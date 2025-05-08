@@ -29,7 +29,7 @@
 \def\cfont#1=#2|#3{\afont#1=#2|{#3}\ufont#1=#2|{#3}}% both
 \expandafter\def\csname\string\fontsize\endcsname#1#2{%
 \csname\string#1\string\fontsize\endcsname={#2}%
-\csname\string\FONT\expandafter\endcsname\expandafter#1\csname\the\csname^\string#1\endcsname\expandafter\endcsname\expandafter=%
+\csname\string\FONT\expandafter\endcsname\expandafter#1\csname\the\csname^\string#1\endcsname\expandafter\endcsname\expandafter=\expandafter%
 {\the\csname\string#1\string\fontname\expandafter\string\csname\the\csname^\string#1\endcsname\endcsname\endcsname \the\csname\string#1\string\fontsize\endcsname}%
 }%
 \def\afontsize#1{%
@@ -80,7 +80,8 @@
 %\ufont\a=[lulix-monoflow.ttf]|{at 15pt}\relax
 %\afont\a=[msmincho.ttc]|{at 30pt}\relax
 %%\cfont\a=[msmincho.ttc]|{30pt}\relax
-%\afontsize{scaled 5000}
+%\fontsize{scaled 5000}
+%\fontsize{scaled 2000}
 %%\afontsize\BACKGROUND
 %%\ufontsize\tiny
 %%%%
