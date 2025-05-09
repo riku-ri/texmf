@@ -30,7 +30,7 @@
 \expandafter\def\csname\string\fontsize\endcsname#1#2{%
 \csname\string#1\string\fontsize\endcsname={#2}%
 \csname\string\FONT\expandafter\endcsname\expandafter#1\csname\the\csname^\string#1\endcsname\expandafter\endcsname\expandafter=\expandafter%
-{\the\csname\string#1\string\fontname\expandafter\string\csname\the\csname^\string#1\endcsname\endcsname\endcsname \the\csname\string#1\string\fontsize\endcsname}%
+{\the\csname\string#1\string\fontname\expandafter\string\csname\the\csname^\string#1\endcsname\endcsname\expandafter\endcsname}%
 }%
 \def\afontsize#1{%
 \expandafter\ifx\csname\the\csname^\string\font\endcsname\endcsname\relax%
