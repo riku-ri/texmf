@@ -24,9 +24,9 @@
 \csname^\string\jfont\endcsname={\csname!\string\font\endcsname}%
 }%
 }%
-\def\afont#1=#2|#3{\csname\string\FONT\endcsname\font#1={#2}}% ascii font
-\def\ufont#1=#2|#3{\csname\string\FONT\endcsname\jfont#1={#2}}% unicode font
-\def\cfont#1=#2|#3{\afont#1=#2|{#3}\ufont#1=#2|{#3}}% both
+\def\afont#1=#2{\csname\string\FONT\endcsname\font#1={#2}}% ascii font
+\def\ufont#1=#2{\csname\string\FONT\endcsname\jfont#1={#2}}% unicode font
+\def\cfont#1=#2{\afont#1={#2}\ufont#1={#2}}% both
 \expandafter\def\csname\string\fontsize\endcsname#1#2{%
 \csname\string#1\string\fontsize\endcsname={#2}%
 \csname\string\FONT\expandafter\endcsname\expandafter#1\csname\the\csname^\string#1\endcsname\expandafter\endcsname\expandafter=\expandafter%
@@ -67,19 +67,19 @@
 %\hrule\vskip2em
 %\begingroup\obeylines\endlinechar=\active\relax
 %%%%
-%%\afont\a=[msmincho.ttc]|{30pt}\relax
+%%\afont\a={[msmincho.ttc]}\relax
 %%%\expandafter\showthe\csname\string\font\string\fontname\string\a\endcsname
 %%%\expandafter\showthe\csname^\string\font\endcsname
 %%%\expandafter\show\csname!\string\jfont\endcsname
 %%%%
-%%\ufont\a=[msmincho.ttc]|{30pt}\relax
+%%\ufont\a={[msmincho.ttc]}\relax
 %%%\expandafter\showthe\csname\string\jfont\string\fontname\string\a\endcsname
 %%%\expandafter\showthe\csname^\string\jfont\endcsname
 %%%\expandafter\show\csname!\string\font\endcsname
 %%%%
-%\ufont\a=[lulix-monoflow.ttf]|{at 15pt}\relax
-%\afont\a=[msmincho.ttc]|{at 30pt}\relax
-%%\cfont\a=[msmincho.ttc]|{30pt}\relax
+%\ufont\a={[lulix-monoflow.ttf]}\relax
+%\afont\a={[msmincho.ttc]}\relax
+%%\cfont\a={[msmincho.ttc]}\relax
 %\fontsize{scaled 5000}
 %\fontsize{scaled 2000}
 %%\afontsize\BACKGROUND
