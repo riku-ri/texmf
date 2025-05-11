@@ -22,7 +22,7 @@
 \the\csname\string#2\endcsname%
 \csname^\string\font\endcsname={\csname!\string\jfont\endcsname}%
 \csname^\string\jfont\endcsname={\csname!\string\font\endcsname}%
-}\relax
+}\relax%
 }%
 \def\afont#1=#2{\csname\string\FONT\endcsname\font#1={#2}}% ascii font
 \def\ufont#1=#2{\csname\string\FONT\endcsname\jfont#1={#2}}% unicode font
@@ -31,7 +31,7 @@
 \csname\string#1\string\fontsize\endcsname={#2}%
 \csname\string\FONT\expandafter\endcsname\expandafter#1\csname\the\csname^\string#1\endcsname\expandafter\endcsname\expandafter=\expandafter%
 {\the\csname\string#1\string\fontname\expandafter\string\csname\the\csname^\string#1\endcsname\endcsname\expandafter\endcsname}%
-\relax
+\relax%
 }%
 \def\afontsize#1{%
 \expandafter\ifx\csname\the\csname^\string\font\endcsname\endcsname\relax%
@@ -41,7 +41,7 @@
 \csname\string\fontsize\endcsname\font{#1}%
 \csname\the\csname^\string\font\endcsname\endcsname%
 \fi%
-\relax
+\relax%
 }%
 \def\ufontsize#1{%
 \expandafter\ifx\csname\the\csname^\string\jfont\endcsname\endcsname\relax%
@@ -50,7 +50,7 @@
 \csname\string\fontsize\endcsname\jfont{#1}%
 \csname\the\csname^\string\font\endcsname\endcsname%
 \fi%
-\relax
+\relax%
 }%
 \def\fontsize#1{\afontsize{#1}\ufontsize{#1}}%
 %%%
