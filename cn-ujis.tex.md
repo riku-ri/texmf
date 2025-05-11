@@ -1,10 +1,15 @@
 # texmf
 
-## [`tex/cn.tex`](tex/cn.tex)
+## [`tex/cn-ujis.tex`](tex/cn-ujis.tex)
 
 一些中文排版的配置
 
+luatexja 本身包含一些基本的 box+glue 配置组合，
+并以 jfm 的形式加载，
+该配置文件 [`tex/cn-ujis.tex`](tex/cn-ujis.tex) 只适用于 `jfm=ujis` 时的排版环境
+
 ### 引号
+
 
 在 plainTeX 的原始字体，即 CMU romman series 中，
 部分字符或字符序列做了特殊的映射。
@@ -21,7 +26,7 @@
 
 （而且在英文段落中切换全角符号来输入引号真的很麻烦）
 
-因此 [`tex/cn.tex`](tex/cn.tex) 提供了相应的方法来更好地排版引号：
+因此 [`tex/cn-ujis.tex`](tex/cn-ujis.tex) 提供了相应的方法来更好地排版引号：
 - <code>\\\`</code>  
 	排版左引号
 	- <code>\\\`</code> 将一直获取紧跟其后的反引号，
