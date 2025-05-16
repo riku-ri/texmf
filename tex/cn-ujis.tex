@@ -12,7 +12,7 @@
 }
 \long\expandafter\gdef\csname recursive`\endcsname#1{
 \csname`dimen`\endcsname=1em\divide\csname`dimen`\endcsname by 3
-\ifx`#1\kern-\csname`dimen`\endcsname\expandafter\`
+\ifx`#1\kern-\csname`dimen`\endcsname\expandafter\`%recursive here
 \else\ifx\`#1\kern-.5\csname`dimen`\endcsname\fi\expandafter#1
 \fi
 }
@@ -26,7 +26,7 @@
 }
 \long\expandafter\gdef\csname recursive'\endcsname#1{
 \csname'dimen'\endcsname=1em\divide\csname'dimen'\endcsname by 3
-\ifx'#1\kern-\csname'dimen'\endcsname\expandafter\'
+\ifx'#1\kern-\csname'dimen'\endcsname\expandafter\'%recursive here
 \else\ifx\'#1\kern-.5\csname'dimen'\endcsname\fi\expandafter#1
 \fi
 }
