@@ -3,10 +3,12 @@
 \expandafter\newtoks\csname^\string\font\endcsname%
 \expandafter\newtoks\csname^\string\jfont\endcsname%
 \expandafter\newtoks\csname\string\font\string\fontsize\endcsname%
+\csname\string\font\string\fontsize\endcsname={scaled 1000}%
 \expandafter\newtoks\csname\string\jfont\string\fontsize\endcsname%
+\csname\string\jfont\string\fontsize\endcsname={scaled 1000}%
 %%%
-\def\notcsname#1{\csname\string\notcsname\expandafter\endcsname#1\relax}%
-\expandafter\def\csname\string\notcsname\endcsname#1#2\relax{#2}%
+\gdef\notcsname#1{\csname\string\notcsname\expandafter\endcsname#1\relax}%
+\expandafter\gdef\csname\string\notcsname\endcsname#1#2\relax{#2}%
 %
 \expandafter\def\csname\string\FONT\endcsname#1#2=#3{%
 \expandafter#1\csname\string#1\string#2\endcsname={#3} \the\csname\string#1\string\fontsize\endcsname\relax%
