@@ -1,0 +1,41 @@
+\gdef\notcsname#1{\csname\string\notcsname\expandafter\endcsname#1\relax}
+\expandafter\gdef\csname\string\notcsname\endcsname#1#2\relax{#2}
+\expandafter\newtoks\csname/cn/forcenewcount/todo\endcsname
+\long\gdef\forcenewcount{
+% \forcenewcount need to detach \csname after it
+% so you MUST ALWAYS wrap \forcenewcount in {}
+\expandafter\futurelet
+\csname\string\futurelet\expandafter\endcsname
+\csname{forcenewcount}\endcsname
+}
+\expandafter\gdef\csname{forcenewcount}\endcsname{
+\expandafter\ifx\csname\string\futurelet\expandafter\endcsname\egroup\relax
+\else\expandafter\ifx\csname\string\futurelet\expandafter\endcsname\bgroup\relax
+\else\csname/cn/forcenewcount/csname\expandafter\expandafter\expandafter\endcsname
+\fi\fi
+}
+\long\expandafter\gdef\csname/cn/forcenewcount/csname\endcsname#1{
+\csname/cn/forcenewcount/todo\endcsname={}
+\ifx#1\csname\relax
+\csname/cn/forcenewcount/endcsname\expandafter\endcsname
+\else
+%
+\expandafter\ifx\csname\expandafter\notcsname\string#1\endcsname\relax
+\csname newcount\endcsname#1
+\fi
+%
+\fi
+}
+\long\expandafter\gdef\csname/cn/forcenewcount/endcsname\endcsname #1{
+\ifx#1\endcsname
+%
+\expandafter\ifx\csname\the\csname/cn/forcenewcount/todo\endcsname\endcsname\relax
+\csname newcount\expandafter\endcsname\csname\the\csname/cn/forcenewcount/todo\endcsname\endcsname\relax
+% !!! here \csname relax\endcsname will break the default \relax
+\fi
+%
+\else
+\csname/cn/forcenewcount/todo\endcsname=\expandafter{\the\csname/cn/forcenewcount/todo\endcsname#1}
+\csname/cn/forcenewcount/endcsname\expandafter\endcsname
+\fi
+}
