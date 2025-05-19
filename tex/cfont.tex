@@ -1,99 +1,161 @@
 \input luatexja.sty%
-%%%
-\expandafter\newtoks\csname^\string\font\endcsname%
-\expandafter\newtoks\csname^\string\jfont\endcsname%
-\expandafter\newtoks\csname\string\font\string\fontsize\endcsname%
-\csname\string\font\string\fontsize\endcsname={scaled 1000}%
-\expandafter\newtoks\csname\string\jfont\string\fontsize\endcsname%
-\csname\string\jfont\string\fontsize\endcsname={scaled 1000}%
-%%%
-\gdef\notcsname#1{\csname\string\notcsname\expandafter\endcsname#1\relax}%
-\expandafter\gdef\csname\string\notcsname\endcsname#1#2\relax{#2}%
-%
-\expandafter\def\csname\string\FONT\endcsname#1#2=#3{%
-\expandafter#1\csname\string#1\string#2\endcsname={#3} \the\csname\string#1\string\fontsize\endcsname\relax%
-\expandafter\ifx\csname\string#2\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string#2\endcsname\else\relax\fi%
-\csname\string#2\endcsname={\csname\string\font\string#2\endcsname\csname\string\jfont\string#2\endcsname}%
-\expandafter\ifx\csname\string#1\string\fontname\string#2\endcsname\relax\csname newtoks\expandafter\endcsname\csname\string#1\string\fontname\string#2\endcsname\else\relax\fi%
-\csname\string#1\string\fontname\string#2\endcsname={#3}%
-%
-\csname^\string#1\endcsname={\expandafter\notcsname\string#2}%
-\expandafter\edef\csname!\string\font\endcsname{\the\csname^\string\jfont\endcsname}%
-\expandafter\edef\csname!\string\jfont\endcsname{\the\csname^\string\font\endcsname}%
-\edef#2{%
-\the\csname\string#2\endcsname%
-\csname^\string\font\endcsname={\csname!\string\jfont\endcsname}%
-\csname^\string\jfont\endcsname={\csname!\string\font\endcsname}%
-}\relax%
-}%
-\def\afont#1=#2{\csname\string\FONT\endcsname\font#1={#2}}% ascii font
-\def\ufont#1=#2{\csname\string\FONT\endcsname\jfont#1={#2}}% unicode font
-\def\cfont#1=#2{\afont#1={#2}\ufont#1={#2}}% both
-\expandafter\def\csname\string\fontsize\endcsname#1#2{%
-\csname\string#1\string\fontsize\endcsname={#2}%
-\csname\string\FONT\expandafter\endcsname\expandafter#1\csname\the\csname^\string#1\endcsname\expandafter\endcsname\expandafter=\expandafter%
-{\the\csname\string#1\string\fontname\expandafter\string\csname\the\csname^\string#1\endcsname\endcsname\expandafter\endcsname}%
-\relax%
-}%
-\def\afontsize#1{%
-\expandafter\ifx\csname\the\csname^\string\font\endcsname\endcsname\relax%
-\csname\string\font\string\fontsize\endcsname={#1}%
-\relax%
-\else% content of this toks is only set after run \afont
-\csname\string\fontsize\endcsname\font{#1}%
-\csname\the\csname^\string\font\endcsname\endcsname%
-\fi%
-\relax%
-}%
-\def\ufontsize#1{%
-\expandafter\ifx\csname\the\csname^\string\jfont\endcsname\endcsname\relax%
-\csname\string\jfont\string\fontsize\endcsname={#1}%
-\else% content of this toks is only set after run \afont
-\csname\string\fontsize\endcsname\jfont{#1}%
-\csname\the\csname^\string\font\endcsname\endcsname%
-\fi%
-\relax%
-}%
-\def\fontsize#1{\afontsize{#1}\ufontsize{#1}}%
-%%%
-\def\tiny{at 5pt}%
-\def\scriptsize{at 7pt}%
-\def\footnotesize{at 8pt}%
-\def\small{at 9pt}%
-\def\normalsize{at 10pt}%
-\def\large{at 12pt}%
-\def\Large{at 14.4pt}%
-\def\LARGE{at 17.28pt}%
-\def\huge{at 20.74pt}%
-\def\Huge{at 24.88pt}%
-\def\BACKGROUND{at 51.60pt}%
+\begingroup\endlinechar=-1
+% lfont* means this will not distinguish font and jfont
+\expandafter\newtoks\csname[rikuri latin or not]\endcsname
+\expandafter\newtoks\csname [rikuri fam]\endcsname
+\expandafter\newtoks\csname[rikuri jfam]\endcsname
+\expandafter\newtoks\csname [rikuri lfont csname]\endcsname
+\expandafter\newtoks\csname [rikuri cachetoks]\endcsname
+\expandafter\newtoks\csname [rikuri^font]\endcsname\global\csname [rikuri^font]\endcsname={}
+\expandafter\newtoks\csname[rikuri^jfont]\endcsname\global\csname[rikuri^jfont]\endcsname={}
+\expandafter\newtoks\csname [rikuri^fontname]\endcsname
+\expandafter\newtoks\csname[rikuri^jfontname]\endcsname
+\expandafter\newtoks\csname [rikuri^fontsize]\endcsname\global\csname [rikuri^fontsize]\endcsname={scaled 1000}
+\expandafter\newtoks\csname[rikuri^jfontsize]\endcsname\global\csname[rikuri^jfontsize]\endcsname={scaled 1000}
+\expandafter\newtoks\csname[rikuri lfontcommand]\endcsname
+\expandafter\newtoks\csname[rikuri famset command]\endcsname
+
+\gdef\lfont#1=#2{
+\csname[rikuri latin or not]\endcsname={}
+\csname[rikuri font with latin or not]\endcsname{#1}={#2}
+}
+\gdef\Lfont#1=#2{
+\csname[rikuri latin or not]\endcsname={j}
+\csname[rikuri font with latin or not]\endcsname{#1}={#2}
+}
+%\expandafter\gdef\csname[rikuri font with latin or not]\endcsname#1{
+%\csname[rikuri fam]\endcsname={}
+%\csname[rikuri jfam]\endcsname={}
+%\csname[rikuri cachetoks]\endcsname={}
+%\csname[rikuri lfontcommand]\endcsname={}
+%\csname[rikuri famset command]\endcsname={}
+%\csname[rikuri latin or not]\endcsname={#1}
+%\csname[rikuri font]\endcsname
+%}
+%\expandafter\gdef\csname[rikuri font]\endcsname{
+%\expandafter\futurelet
+%\csname[rikuri after{font}]\expandafter\endcsname
+%\csname[rikuri{font}]\endcsname
+%}
+%\expandafter\gdef\csname[rikuri{font}]\endcsname{
+%\csname[rikuri check not digit]\endcsname
+%{\csname[rikuri after{font}]\endcsname}
+%{\csname[rikuri not digit while relax]\endcsname}
 %%
-%% test case: [msmincho] and [simsun] font is required
-%\hrule\vskip2em
-%\begingroup\obeylines\endlinechar=\active\relax
-%%%%
-%%\afont\a={[msmincho.ttc]}\relax
-%%%\expandafter\showthe\csname\string\font\string\fontname\string\a\endcsname
-%%%\expandafter\showthe\csname^\string\font\endcsname
-%%%\expandafter\show\csname!\string\jfont\endcsname
-%%%%
-%%\ufont\a={[msmincho.ttc]}\relax
-%%%\expandafter\showthe\csname\string\jfont\string\fontname\string\a\endcsname
-%%%\expandafter\showthe\csname^\string\jfont\endcsname
-%%%\expandafter\show\csname!\string\font\endcsname
-%%%%
-%\ufont\a={[lulix-monoflow.ttf]}\relax
-%\afont\a={[msmincho.ttc]}\relax
-%%\cfont\a={[msmincho.ttc]}\relax
-%\fontsize{scaled 5000}
-%\fontsize{scaled 2000}
-%%\afontsize\BACKGROUND
-%%\ufontsize\tiny
-%%%%
-%\a
-%睦ちゃん　死んちゃったよ
-%ギターＣ和弦　全部ーできない
-%Ave Mujika　長く続かない
-%\begingroup
-%\endgroup
-%\hrule\par\bye
+%\expandafter\ifx\csname[rikuri not digit while relax]\endcsname\relax
+%\expandafter\let
+%\csname[rikuri{font}next]\expandafter\endcsname
+%\csname[rikuri font with fam]\endcsname
+%\else
+%\expandafter\let
+%\csname[rikuri{font}next]\expandafter\endcsname
+%\csname[rikuri font with number]\endcsname
+%\fi
+%\csname[rikuri{font}next]\endcsname
+%}
+%\expandafter\gdef\csname[rikuri font with number]\endcsname#1{
+%\csname[rikuri \the\csname[rikuri latin or not]\endcsname fam]\endcsname=\expandafter{
+%\the\csname[rikuri \the\csname[rikuri latin or not]\endcsname fam]\endcsname#1
+%}
+%\csname[rikuri font]\endcsname
+%}
+\expandafter\gdef\csname[rikuri notcsname]\endcsname#1#2{#2}
+\expandafter\gdef\csname[rikuri font with latin or not]\endcsname#1=#2{
+\csname[rikuri cachetoks]\endcsname={}
+\csname[rikuri lfont csname]\endcsname={}
+\csname[rikuri lfontcommand]\endcsname={}
+\let\rikuriendcsname\endcsname
+\let\endcsname\relax
+\expandafter\edef\csname[rikuri lfont notcsname]\rikuriendcsname{
+\ifx\csname#1\else\csname[rikuri notcsname]\expandafter\rikuriendcsname\string#1\fi
+}
+\let\endcsname\rikuriendcsname
+\csname[rikuri lfont csname]\endcsname=
+\expandafter\expandafter\expandafter{
+\csname[rikuri lfont notcsname]\endcsname
+}
+\csname[rikuri lfontcommand]\endcsname=\expandafter{
+\expandafter\the
+\csname[rikuri^\the\csname[rikuri latin or not]\endcsname fontsize]\endcsname
+}
+\csname[rikuri cachetoks]\endcsname={#2}
+\csname[rikuri lfontcommand]\endcsname=\expandafter{\expandafter=
+\the\csname[rikuri cachetoks]\expandafter\expandafter\expandafter\endcsname
+\expandafter\space
+\the\csname[rikuri lfontcommand]\endcsname
+}
+\csname[rikuri cachetoks]\endcsname=\expandafter{
+% if the csname is \ft, this will be \[rikuri font ft] or \[rikuri jfont ft]
+% the true csname to \font or \jfont is here
+\csname[rikuri \the\csname[rikuri latin or not]\endcsname font \the\csname[rikuri lfont csname]\endcsname\expandafter]\endcsname
+}
+\csname[rikuri lfontcommand]\endcsname=\expandafter{
+\the\csname[rikuri cachetoks]\expandafter\endcsname
+\the\csname[rikuri lfontcommand]\endcsname
+}
+\csname[rikuri lfontcommand]\endcsname=\expandafter{
+\csname\the\csname[rikuri latin or not]\endcsname font\expandafter\endcsname%\jfont or \font
+\the\csname[rikuri lfontcommand]\endcsname
+}
+\csname[rikuri lfontcommand]\endcsname=\expandafter{
+\the\csname[rikuri lfontcommand]\expandafter\endcsname
+\expandafter\relax
+\the\csname[rikuri cachetoks]\endcsname
+}
+\expandafter\ifx
+\csname[rikuri fontcommand \the\csname[rikuri lfont csname]\endcsname]\endcsname
+\relax
+\csname newtoks\expandafter\endcsname
+\csname[rikuri fontcommand \the\csname[rikuri lfont csname]\endcsname]\endcsname
+\fi
+\expandafter\ifx
+\csname[rikuri jfontcommand \the\csname[rikuri lfont csname]\endcsname]\endcsname
+\relax
+\csname newtoks\expandafter\endcsname
+\csname[rikuri jfontcommand \the\csname[rikuri lfont csname]\endcsname]\endcsname
+\fi
+\csname[
+rikuri \the\csname[rikuri latin or not]\endcsname
+fontcommand \the\csname[rikuri lfont csname]\endcsname
+]\endcsname=\expandafter{\the\csname[rikuri lfontcommand]\endcsname}
+\expandafter\edef\csname\the\csname[rikuri lfont csname]\endcsname\endcsname{
+\the\csname [rikuri fontcommand \the\csname[rikuri lfont csname]\endcsname]\endcsname
+\the\csname[rikuri jfontcommand \the\csname[rikuri lfont csname]\endcsname]\endcsname
+\csname[rikuri^\the\csname[rikuri latin or not]\endcsname font]\endcsname={
+\the\csname[rikuri lfont csname]\endcsname
+}
+}
+}
+\gdef\lfontsize#1{\csname [rikuri^fontsize]\endcsname={#1}\csname\the\csname [rikuri^font]\endcsname\endcsname}
+\gdef\Lfontsize#1{\csname[rikuri^jfontsize]\endcsname={#1}\csname\the\csname[rikuri^jfont]\endcsname\endcsname}
+
+\gdef\tiny{at 5pt}
+\gdef\scriptsize{at 7pt}
+\gdef\footnotesize{at 8pt}
+\gdef\small{at 9pt}
+\gdef\normalsize{at 10pt}
+\gdef\large{at 12pt}
+\gdef\Large{at 14.4pt}
+\gdef\LARGE{at 17.28pt}
+\gdef\huge{at 20.74pt}
+\gdef\Huge{at 24.88pt}
+\gdef\BACKGROUND{at 51.60pt}
+
+\expandafter\gdef\csname[rikuri check not digit]\endcsname#1#2{
+% check if #1 is NOT digit
+% if #1 is digit #2 will be defined to a empty macro
+% if #1 is not digit #2 will be \relax
+% NOTE #1 and #2 !MUST be wrapped by \csname\endcsname
+\expandafter\let#2\relax
+\expandafter\ifx#11\expandafter\def#2{}\else
+\expandafter\ifx#12\expandafter\def#2{}\else
+\expandafter\ifx#13\expandafter\def#2{}\else
+\expandafter\ifx#14\expandafter\def#2{}\else
+\expandafter\ifx#15\expandafter\def#2{}\else
+\expandafter\ifx#16\expandafter\def#2{}\else
+\expandafter\ifx#18\expandafter\def#2{}\else
+\expandafter\ifx#19\expandafter\def#2{}\else
+\expandafter\ifx#10\expandafter\def#2{}\else
+\fi\fi\fi\fi\fi\fi\fi\fi\fi
+}
+\endgroup%
