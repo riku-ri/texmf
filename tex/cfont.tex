@@ -15,6 +15,7 @@
 \expandafter\newtoks\csname[rikuri lfontcommand]\endcsname
 \expandafter\newtoks\csname[rikuri famset command]\endcsname
 
+\gdef\lLfont#1=#2{\lfont{#1}={#2}\relax\Lfont{#1}={#2}\relax}
 \gdef\lfont#1=#2{
 \csname[rikuri latin or not]\endcsname={}
 \csname[rikuri font with latin or not]\endcsname{#1}={#2}
@@ -69,6 +70,9 @@
 \expandafter\edef\csname[rikuri lfont notcsname]\rikuriendcsname{
 \ifx\csname#1\else\csname[rikuri notcsname]\expandafter\rikuriendcsname\string#1\fi
 }
+% Use \csname[rikuri lfont csname]\endcsname but not #1 to later
+% to make the same behavior
+% no mater #1 was anyone of: \ft, \csname ft\endcsname, {\csname ft\endcsname}
 \let\endcsname\rikuriendcsname
 \csname[rikuri lfont csname]\endcsname=
 \expandafter\expandafter\expandafter{
@@ -102,6 +106,16 @@
 \expandafter\relax
 \the\csname[rikuri cachetoks]\endcsname
 }
+\csname[rikuri cachetoks]\endcsname=\expandafter{
+\csname[rikuri^\the\csname[rikuri latin or not]\endcsname font]\expandafter\endcsname\expandafter=\expandafter{
+\the\csname[rikuri lfont csname]\endcsname
+}
+}
+\csname[rikuri lfontcommand]\endcsname=\expandafter{
+\the\csname[rikuri lfontcommand]\expandafter\endcsname
+\expandafter\relax
+\the\csname[rikuri cachetoks]\endcsname
+}
 \expandafter\ifx
 \csname[rikuri fontcommand \the\csname[rikuri lfont csname]\endcsname]\endcsname
 \relax
@@ -121,14 +135,12 @@ fontcommand \the\csname[rikuri lfont csname]\endcsname
 \expandafter\edef\csname\the\csname[rikuri lfont csname]\endcsname\endcsname{
 \the\csname [rikuri fontcommand \the\csname[rikuri lfont csname]\endcsname]\endcsname
 \the\csname[rikuri jfontcommand \the\csname[rikuri lfont csname]\endcsname]\endcsname
-\csname[rikuri^\the\csname[rikuri latin or not]\endcsname font]\endcsname={
-\the\csname[rikuri lfont csname]\endcsname
 }
 }
-}
+
+\gdef\fontsize#1{\lfontsize{#1}\Lfontsize{#1}}
 \gdef\lfontsize#1{\csname [rikuri^fontsize]\endcsname={#1}\csname\the\csname [rikuri^font]\endcsname\endcsname}
 \gdef\Lfontsize#1{\csname[rikuri^jfontsize]\endcsname={#1}\csname\the\csname[rikuri^jfont]\endcsname\endcsname}
-\gdef\fontsize#1{\lfontsize{#1}\Lfontsize{#1}}
 
 \gdef\tiny{at 5pt}
 \gdef\scriptsize{at 7pt}
