@@ -128,6 +128,12 @@ fontcommand \the\csname[rikuri lfont csname]\endcsname
 }
 \gdef\lfontsize#1{\csname [rikuri^fontsize]\endcsname={#1}\csname\the\csname [rikuri^font]\endcsname\endcsname}
 \gdef\Lfontsize#1{\csname[rikuri^jfontsize]\endcsname={#1}\csname\the\csname[rikuri^jfont]\endcsname\endcsname}
+\gdef\fontsize#1{
+\csname [rikuri^fontsize]\endcsname={#1}\csname
+\the\csname [rikuri^font]\endcsname\endcsname
+\csname[rikuri^jfontsize]\endcsname={#1}\csname
+\the\csname[rikuri^jfont]\endcsname\endcsname
+}
 
 \gdef\tiny{at 5pt}
 \gdef\scriptsize{at 7pt}
