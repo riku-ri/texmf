@@ -67,6 +67,7 @@
 \csname[rikuri lfontcommand]\endcsname={}
 \let\rikuriendcsname\endcsname
 \let\endcsname\relax
+%
 \expandafter\edef\csname[rikuri lfont notcsname]\rikuriendcsname{
 \ifx\csname#1\else\csname[rikuri notcsname]\expandafter\rikuriendcsname\string#1\fi
 }
@@ -74,8 +75,8 @@
 % to make the same behavior
 % no mater #1 was anyone of: \ft, \csname ft\endcsname
 \let\endcsname\rikuriendcsname
-\csname[rikuri lfont csname]\endcsname=
-\expandafter\expandafter\expandafter{
+%
+\csname[rikuri lfont csname]\endcsname=\expandafter\expandafter\expandafter{
 \csname[rikuri lfont notcsname]\endcsname
 }
 \csname[rikuri lfontcommand]\endcsname=\expandafter{

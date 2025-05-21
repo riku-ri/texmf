@@ -72,6 +72,28 @@ Latin 字体（`\lfont`）和非Laint字体（`\Lfont`）。
 需要配合 `\fontsize` 系列使用才有效，
 例如 `\fontsize\tiny`
 
+#### 数学字体
+
+众所周知， TeX 在数学模式中的排版控制和其它模式有着巨大的区别。
+字体就是其中之一。
+例如作为上标、下标的字体会自动缩小，
+字体本身需要额外绘制用于数学表达式的符号等等。
+对于后者，往往需要特别制作的数学字体，
+在我的工作环境（Arch Linux/wayland）中，
+这些字体会被 `pacman -Fl texlive-basic | grep cmsy | head` 列出:
+> ```
+> texlive-basic usr/share/texmf-dist/fonts/afm/public/amsfonts/cm/cmsy10.afm
+> texlive-basic usr/share/texmf-dist/fonts/afm/public/amsfonts/cm/cmsy5.afm
+> texlive-basic usr/share/texmf-dist/fonts/afm/public/amsfonts/cm/cmsy6.afm
+> texlive-basic usr/share/texmf-dist/fonts/afm/public/amsfonts/cm/cmsy7.afm
+> texlive-basic usr/share/texmf-dist/fonts/afm/public/amsfonts/cm/cmsy8.afm
+> texlive-basic usr/share/texmf-dist/fonts/afm/public/amsfonts/cm/cmsy9.afm
+> texlive-basic usr/share/texmf-dist/fonts/pk/ljfour/public/cm/dpi600/cmsy10.pk
+> texlive-basic usr/share/texmf-dist/fonts/pk/ljfour/public/cm/dpi600/cmsy7.pk
+> texlive-basic usr/share/texmf-dist/fonts/source/public/cm/cmsy10.mf
+> texlive-basic usr/share/texmf-dist/fonts/source/public/cm/cmsy5.mf
+> ```
+
 #### 一些无用的技巧
 
 ##### 在分组中定义全局字体
