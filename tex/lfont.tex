@@ -158,20 +158,36 @@ fontcommand \the\csname[rikuri lfont csname]\endcsname
 %TODO: set math font here
 }
 }
-\gdef\ltextfont{\csname[rikuri lmathfont]\endcsname\textfont}
-\gdef\lscriptfont{\csname[rikuri lmathfont]\endcsname\scriptfont}
-\gdef\lscriptscriptfont{\csname[rikuri lmathfont]\endcsname\scriptscriptfont}
-\expandafter\gdef\csname[rikuri lmathfont]\endcsname#1{
+\gdef\ltextfont{\csname[rikuri mathfont]\endcsname\textfont}
+\gdef\lscriptfont{\csname[rikuri mathfont]\endcsname\scriptfont}
+\gdef\lscriptscriptfont{\csname[rikuri mathfont]\endcsname\scriptscriptfont}
+\expandafter\gdef\csname[rikuri mathfont]\endcsname#1{
 \expandafter\let\csname[rikuri mathfont type]\endcsname#1
-\expandafter\afterassignment\csname[rikuri lmathfont with type]\endcsname
+\expandafter\afterassignment\csname[rikuri mathfont with type]\endcsname
 \count0=
 }
-\expandafter\gdef\csname[rikuri lmathfont with type]\endcsname=#1{
+\expandafter\gdef\csname[rikuri mathfont with type]\endcsname=#1{
 \expandafter\edef\csname[rikuri lfont notcsname]\rikuriendcsname{
 \ifx\csname#1\else\csname[rikuri notcsname]\expandafter\rikuriendcsname\string#1\fi
 }
 \let\endcsname\rikuriendcsname
 \csname[rikuri mathfont type]\endcsname\count0=\the\csname[rikuri font \csname[rikuri lfont notcsname]\endcsname]\endcsname
+}
+\gdef\Ltextfont{\csname[rikuri jamathfont]\endcsname{jatextfont}}
+\gdef\Lscriptfont{\csname[rikuri jamathfont]\endcsname{jascriptfont}}
+\gdef\Lscriptscriptfont{\csname[rikuri jamathfont]\endcsname{jascriptscriptfont}}
+\expandafter\gdef\csname[rikuri jamathfont]\endcsname#1{
+\expandafter\edef\csname[rikuri jamathfont type]\endcsname{#1}
+\expandafter\afterassignment\csname[rikuri jamathfont with type]\endcsname
+\count0=
+}
+\expandafter\gdef\csname[rikuri jamathfont with type]\endcsname=#1{
+\expandafter\edef\csname[rikuri lfont notcsname]\rikuriendcsname{
+\ifx\csname#1\else\csname[rikuri notcsname]\expandafter\rikuriendcsname\string#1\fi
+}
+\let\endcsname\rikuriendcsname
+\ltjsetparameter{\csname[rikuri jamathfont type]\endcsname={\the\count0,\csname[rikuri jfont \csname[rikuri lfont notcsname]\endcsname]\endcsname}
+}
 }
 
 \gdef\fontsize#1{\lfontsize{#1}\Lfontsize{#1}}

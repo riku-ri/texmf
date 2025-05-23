@@ -56,15 +56,15 @@ Latin 字体（`\lfont`）和非Laint字体（`\Lfont`）。
 
 #### 设置字号
 
-- `\afontsize`  
+- `\lfontsize`  
 	改变通过 `\afont` 或 `\lfont` 设置的 ascii 字体大小
-	- 用法格式为 `\afontsize{at 12pt}`
+	- 用法格式为 `\lfontsize{at 12pt}`
 		> TeX 有两种字号大小单位， `at` 和 `scaled`，
 		> 因此参数中不能只有数值，需要带有 `at` 或 `scaled` 。
-- `\ufontsize`  
-	和 `\afontsize` 类似，但是用于设置 unicode 字体
+- `\Lfontsize`  
+	和 `\lfontsize` 类似，但是用于设置 unicode 字体
 - `\fontsize`  
-	和 `\afontsize` `\ufontsize` 类似，但是同时作用于 ascii 字体和 unicode 字体
+	和 `\lfontsize` `\Lfontsize` 类似，但是同时作用于 ascii 字体和 unicode 字体
 
 另外 [`tex/lfont.tex`](tex/lfont.tex) 还定义了一些类似 LaTeX 的尺寸。
 例如 `\tiny` `\Large`。
@@ -74,13 +74,36 @@ Latin 字体（`\lfont`）和非Laint字体（`\Lfont`）。
 
 #### 数学字体
 
+- Latin
+	- `\ltextfont`  
+		与 `\textfont` 用法类似，
+		但 `\ltextfont<fam>=` 后必须紧跟由 `\lfont` 定义的字体指令，
+		而**不能**是 `\font` 定义的指令
+	- `\lscriptfont`  
+		与 `\ltextfont` 类似，但设置 scriptfont 而非 textfont
+	- `\lscriptscriptfont`  
+		与 `\ltextfont` 类似，但设置 scriptscriptfont 而非 textfont
+- 非 Latin
+	- `\Ltextfont`  
+		与 `\ltextfont` 类似，但是设置非 Latin 字体
+	- `\Lscriptfont`  
+		与 `\lscriptfont` 类似，但是设置非 Latin 字体
+	- `\Lscriptscriptfont`  
+		与 `\lscriptscriptfont` 类似，但是设置非 Latin 字体
+
+##### 关于数学字体，不得不说的事项
+
 众所周知， TeX 在数学模式中的排版控制和其它模式有着巨大的区别。
 字体就是其中之一。
 例如作为上标、下标的字体会自动缩小，
 字体本身需要额外绘制用于数学表达式的符号等等。
 对于后者，往往需要特别制作的数学字体，
-在我的工作环境（Arch Linux/wayland）中，
+在我的工作环境（Arch Linux, wayland）中，
 这些字体会被 `pacman -Fl texlive-basic | grep cmsy | head` 列出:
+
+<details>
+<summary>点击此处展开列出的数学字体</summary>
+
 > ```
 > texlive-basic usr/share/texmf-dist/fonts/afm/public/amsfonts/cm/cmsy10.afm
 > texlive-basic usr/share/texmf-dist/fonts/afm/public/amsfonts/cm/cmsy5.afm
@@ -93,6 +116,9 @@ Latin 字体（`\lfont`）和非Laint字体（`\Lfont`）。
 > texlive-basic usr/share/texmf-dist/fonts/source/public/cm/cmsy10.mf
 > texlive-basic usr/share/texmf-dist/fonts/source/public/cm/cmsy5.mf
 > ```
+
+</details><br/>
+
 关于上面所说的“特殊制作”，其中一点便是这些字体的字符映射会和一般的字体不同。
 例如 `R` 字符的 ASCII 编码是 `82` ，
 因此通用的字体会在内部“第 82 个”字符的位置上保存 `R` 的绘制曲线
@@ -106,15 +132,21 @@ Latin 字体（`\lfont`）和非Laint字体（`\Lfont`）。
 因此一般不建议第2、第3族的字体，
 除非你很清楚它们会像上面描述的那样工作。
 
-- `\ltextfont`  
-	与 `\textfont` 用法类似，
-	但 `\textfont<fam>=` 后必须紧跟由 `\lfont` 定义的字体指令，
-	而**不能**是 `\font` 定义的指令
-- `\lscriptfont`  
-	与 `\ltextfont` 类似，但设置 scriptfont 而非 textfont
-- `\lscriptscriptfont`  
-	与 `\ltextfont` 类似，但设置 scriptscriptfont 而非 textfont
+另外，
+luatexja 本身并不支持数学环境下的 CJK 上下标。
+因此即使设置了 `\Lscriptfont` 也无法使用 `$anyway^{失望的是}$` 。
+目前而言， `\Lscriptfont` 和 `\Lscriptscriptfont` 其实是*无用*的指令。
 
+---
+---
+
+数学环境下的排版包含着数不清的细节，
+实际上，在数学环境中，我建议始终设置并使用最初的、和谐的非 Latin 字体，
+除此之外不再改动。
+到了不得不让它更大时，将整个数学盒子放大会是更好的选择。
+
+---
+---
 
 #### 一些无用的技巧
 
