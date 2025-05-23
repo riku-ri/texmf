@@ -1,19 +1,27 @@
 \input luatexja.sty%
 \begingroup\endlinechar=-1
 % lfont* means this will not distinguish font and jfont
+%
 \expandafter\newtoks\csname[rikuri latin or not]\endcsname
 \expandafter\newtoks\csname [rikuri fam]\endcsname
 \expandafter\newtoks\csname[rikuri jfam]\endcsname
 \expandafter\newtoks\csname [rikuri lfont csname]\endcsname
 \expandafter\newtoks\csname [rikuri cachetoks]\endcsname
+\expandafter\newtoks\csname[rikuri lfontcommand]\endcsname
+\expandafter\newtoks\csname[rikuri famset command]\endcsname
+%
 \expandafter\newtoks\csname [rikuri^font]\endcsname\global\csname [rikuri^font]\endcsname={}
 \expandafter\newtoks\csname[rikuri^jfont]\endcsname\global\csname[rikuri^jfont]\endcsname={}
 \expandafter\newtoks\csname [rikuri^fontname]\endcsname
 \expandafter\newtoks\csname[rikuri^jfontname]\endcsname
 \expandafter\newtoks\csname [rikuri^fontsize]\endcsname\global\csname [rikuri^fontsize]\endcsname={scaled 1000}
 \expandafter\newtoks\csname[rikuri^jfontsize]\endcsname\global\csname[rikuri^jfontsize]\endcsname={scaled 1000}
-\expandafter\newtoks\csname[rikuri lfontcommand]\endcsname
-\expandafter\newtoks\csname[rikuri famset command]\endcsname
+\expandafter\newtoks\csname [rikuri^textfont]\endcsname
+\expandafter\newtoks\csname [rikuri^scriptfont]\endcsname
+\expandafter\newtoks\csname [rikuri^scriptscriptfont]\endcsname
+\expandafter\newtoks\csname[rikuri^jtextfont]\endcsname
+\expandafter\newtoks\csname[rikuri^jscriptfont]\endcsname
+\expandafter\newtoks\csname[rikuri^jscriptscriptfont]\endcsname
 
 \gdef\lLfont#1=#2{\lfont{#1}={#2}\relax\Lfont{#1}={#2}\relax}
 \gdef\lfont#1=#2{
@@ -60,7 +68,6 @@
 %}
 %\csname[rikuri font]\endcsname
 %}
-\expandafter\gdef\csname[rikuri notcsname]\endcsname#1#2{#2}
 \expandafter\gdef\csname[rikuri font with latin or not]\endcsname#1=#2{
 \csname[rikuri cachetoks]\endcsname={}
 \csname[rikuri lfont csname]\endcsname={}
@@ -71,17 +78,18 @@
 \expandafter\edef\csname[rikuri lfont notcsname]\rikuriendcsname{
 \ifx\csname#1\else\csname[rikuri notcsname]\expandafter\rikuriendcsname\string#1\fi
 }
+\let\endcsname\rikuriendcsname
 % Use \csname[rikuri lfont csname]\endcsname but not #1 to later
 % to make the same behavior
 % no mater #1 was anyone of: \ft, \csname ft\endcsname
-\let\endcsname\rikuriendcsname
 %
 \csname[rikuri lfont csname]\endcsname=\expandafter\expandafter\expandafter{
 \csname[rikuri lfont notcsname]\endcsname
 }
 \csname[rikuri lfontcommand]\endcsname=\expandafter{
 \expandafter\the
-\csname[rikuri^\the\csname[rikuri latin or not]\endcsname fontsize]\endcsname
+\csname[rikuri^\the\csname[rikuri latin or not]\endcsname fontsize]\expandafter\endcsname
+\the\csname[rikuri lfontcommand]\endcsname
 }
 \csname[rikuri cachetoks]\endcsname={#2}
 \csname[rikuri lfontcommand]\endcsname=\expandafter{\expandafter=
@@ -137,11 +145,40 @@ fontcommand \the\csname[rikuri lfont csname]\endcsname
 \the\csname [rikuri fontcommand \the\csname[rikuri lfont csname]\endcsname]\endcsname
 \the\csname[rikuri jfontcommand \the\csname[rikuri lfont csname]\endcsname]\endcsname
 }
+\expandafter\def\csname
+\the\csname[rikuri lfont csname]\endcsname\expandafter\expandafter\expandafter
+\endcsname\expandafter\expandafter\expandafter{
+\csname\the\csname[rikuri lfont csname]\endcsname\endcsname
+\the\csname [rikuri^textfont]\endcsname
+\the\csname [rikuri^scriptfont]\endcsname
+\the\csname [rikuri^scriptscriptfont]\endcsname
+\the\csname[rikuri^jtextfont]\endcsname
+\the\csname[rikuri^jscriptfont]\endcsname
+\the\csname[rikuri^jscriptscriptfont]\endcsname
+%TODO: set math font here
+}
+}
+\gdef\ltextfont{\csname[rikuri lmathfont]\endcsname\textfont}
+\gdef\lscriptfont{\csname[rikuri lmathfont]\endcsname\scriptfont}
+\gdef\lscriptscriptfont{\csname[rikuri lmathfont]\endcsname\scriptscriptfont}
+\expandafter\gdef\csname[rikuri lmathfont]\endcsname#1{
+\expandafter\let\csname[rikuri mathfont type]\endcsname#1
+\expandafter\afterassignment\csname[rikuri lmathfont with type]\endcsname
+\count0=
+}
+\expandafter\gdef\csname[rikuri lmathfont with type]\endcsname=#1{
+\expandafter\edef\csname[rikuri lfont notcsname]\rikuriendcsname{
+\ifx\csname#1\else\csname[rikuri notcsname]\expandafter\rikuriendcsname\string#1\fi
+}
+\let\endcsname\rikuriendcsname
+\csname[rikuri mathfont type]\endcsname\count0=\the\csname[rikuri font \csname[rikuri lfont notcsname]\endcsname]\endcsname
 }
 
 \gdef\fontsize#1{\lfontsize{#1}\Lfontsize{#1}}
 \gdef\lfontsize#1{\csname [rikuri^fontsize]\endcsname={#1}\csname\the\csname [rikuri^font]\endcsname\endcsname}
 \gdef\Lfontsize#1{\csname[rikuri^jfontsize]\endcsname={#1}\csname\the\csname[rikuri^jfont]\endcsname\endcsname}
+
+\expandafter\gdef\csname[rikuri notcsname]\endcsname#1#2{#2}
 
 \gdef\tiny{at 5pt}
 \gdef\scriptsize{at 7pt}

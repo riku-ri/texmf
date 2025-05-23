@@ -93,6 +93,28 @@ Latin 字体（`\lfont`）和非Laint字体（`\Lfont`）。
 > texlive-basic usr/share/texmf-dist/fonts/source/public/cm/cmsy10.mf
 > texlive-basic usr/share/texmf-dist/fonts/source/public/cm/cmsy5.mf
 > ```
+关于上面所说的“特殊制作”，其中一点便是这些字体的字符映射会和一般的字体不同。
+例如 `R` 字符的 ASCII 编码是 `82` ，
+因此通用的字体会在内部“第 82 个”字符的位置上保存 `R` 的绘制曲线
+（严格来说一般并不是第82个字符，在 ASCII 前仍有一些其它的位置）。
+而“特殊制作”的数学字体有可能会绘制数学符号。
+相当于在使用这些字体后，在键盘上按下 `R` 后出现的是一个数学符号，
+而不是 `R` 这个字母。
+> 并非只有数学字体会这么做，许多只显示表情、线条的字体也会如此。
+
+这些行为发生在 TeX 的第2、第3族。
+因此一般不建议第2、第3族的字体，
+除非你很清楚它们会像上面描述的那样工作。
+
+- `\ltextfont`  
+	与 `\textfont` 用法类似，
+	但 `\textfont<fam>=` 后必须紧跟由 `\lfont` 定义的字体指令，
+	而**不能**是 `\font` 定义的指令
+- `\lscriptfont`  
+	与 `\ltextfont` 类似，但设置 scriptfont 而非 textfont
+- `\lscriptscriptfont`  
+	与 `\ltextfont` 类似，但设置 scriptscriptfont 而非 textfont
+
 
 #### 一些无用的技巧
 
