@@ -4,6 +4,8 @@
 
 A simple wrapper of luatexja.
 
+---
+
 > 下文中的指令说的都是 TeX 的控制系列(*Control Sequences*)
 
 TeX 主要通过 `\font` 加载和选择字体，
