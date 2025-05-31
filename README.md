@@ -3,6 +3,8 @@
 TeX will auto load the `.tex` file in the path `$HOME/texmf`,
 this repository provide some TeX package.
 
+> 绝大多数情况下，相关说明中提到的 “指令” 都指 TeX 的控制系列(*Control Sequences*)
+
 | path | overview | refer to |
 | - | - | - |
 | [`tex/lfont.tex`](tex/lfont.tex) | A simple wrapper of luatexja | [lfont.tex.md](lfont.tex.md) |

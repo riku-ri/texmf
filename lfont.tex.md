@@ -6,8 +6,6 @@ A simple wrapper of luatexja.
 
 ---
 
-> 下文中的指令说的都是 TeX 的控制系列(*Control Sequences*)
-
 TeX 主要通过 `\font` 加载和选择字体，
 但它无法正确映射字体中的非 ascii 字符，
 对于我来说主要是 CJK 字符。
