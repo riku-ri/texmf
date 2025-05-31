@@ -1,0 +1,176 @@
+\input luatexja.sty
+\begingroup\endlinechar=-1
+
+\expandafter\newcount\csname [rikuri quotient]\endcsname
+\expandafter\newcount\csname[rikuri remainder]\endcsname
+\expandafter\gdef\csname[rikuri divide]\endcsname#1/#2{
+\csname[rikuri remainder]\endcsname=#1\relax
+\csname [rikuri quotient]\endcsname=\csname[rikuri remainder]\endcsname\relax
+\divide\csname[rikuri quotient]\endcsname by #2\relax
+\multiply\csname[rikuri quotient]\endcsname by #2\relax
+\advance\csname[rikuri remainder]\endcsname by -\csname[rikuri quotient]\endcsname\relax
+\divide\csname[rikuri quotient]\endcsname by #2\relax
+}
+%
+\expandafter\newtoks\csname[rikuri cncase]\endcsname
+\expandafter\newcount\csname[rikuri digit level]\endcsname
+\expandafter\newtoks\csname[rikuri cnnum format]\endcsname
+%
+\gdef\cnnums{\csname[rikuri cnnums with case]\endcsname{num}}
+\gdef\cnnumzs{\csname[rikuri cnnums with case]\endcsname{numz}}
+\gdef\cnNUMs{\csname[rikuri cnnums with case]\endcsname{NUM}}
+\gdef\cnNUMzs{\csname[rikuri cnnums with case]\endcsname{NUMz}}
+\expandafter\gdef\csname[rikuri cnnums with case]\endcsname#1{
+\begingroup % begincnnums-endcnnums search this comment to find the pair
+\csname[rikuri cncase]\endcsname={#1}
+\csname[rikuri cnnums]\endcsname
+}
+\expandafter\gdef\csname[rikuri cnnums]\endcsname{
+\expandafter\futurelet
+\csname[rikuri after{cnnums}]\expandafter\endcsname
+\csname[rikuri{cnnums}]\endcsname
+}
+\expandafter\gdef\csname[rikuri{cnnums}]\endcsname{
+\csname[rikuri check not digit]\endcsname
+{\csname[rikuri after{cnnums}]\endcsname}
+{\csname[rikuri not digit while relax]\endcsname}
+%
+\expandafter\ifx\csname[rikuri not digit while relax]\endcsname\relax
+\endgroup % begincnnums-endcnnums search this comment to find the pair
+\else
+\csname[rikuri cnnums with num]\expandafter\endcsname
+\fi
+}
+\expandafter\gdef\csname[rikuri cnnums with num]\endcsname#1{
+\csname[rikuri cn\the\csname[rikuri cncase]\endcsname digit]\endcsname#1\relax
+\csname[rikuri cnnums]\endcsname
+}
+
+\gdef\cnnum{\csname[rikuri cnnum with case]\endcsname{num}}
+\gdef\cnnumz{\csname[rikuri cnnum with case]\endcsname{numz}}
+\gdef\cnNUM{\csname[rikuri cnnum with case]\endcsname{NUM}}
+\gdef\cnNUMz{\csname[rikuri cnnum with case]\endcsname{NUMz}}
+\expandafter\gdef\csname[rikuri cnnum with case]\endcsname#1{
+\begingroup % begincnnum-endcnnum search this comment to find the pair
+\expandafter\gdef\csname[rikuri reversed num]\endcsname{}
+\csname[rikuri digit level]\endcsname=0\relax
+\csname[rikuri cncase]\endcsname={#1}
+\csname[rikuri cnnum]\endcsname
+}
+\expandafter\gdef\csname[rikuri cnnum]\endcsname{
+\expandafter\futurelet
+\csname[rikuri after{cnnum}]\expandafter\endcsname
+\csname[rikuri{cnnum}]\endcsname
+}
+\expandafter\gdef\csname[rikuri{cnnum}]\endcsname{
+\csname[rikuri check not digit]\endcsname
+{\csname[rikuri after{cnnum}]\endcsname}
+{\csname[rikuri not digit while relax]\endcsname}
+%
+\expandafter\ifx\csname[rikuri not digit while relax]\endcsname\relax
+\csname[rikuri cnnum format]\endcsname={}
+\expandafter\csname[rikuri num to cnnum]\expandafter\expandafter\expandafter\endcsname
+\csname[rikuri reversed num]\endcsname\relax
+\endgroup % begincnnum-endcnnum search this comment to find the pair
+\else
+\csname[rikuri cnnum with num]\expandafter\endcsname
+\fi
+}
+\expandafter\gdef\csname[rikuri num to cnnum]\endcsname#1{
+\expandafter\ifx#10
+\else
+%
+\csname[rikuri divide]\endcsname\the\csname[rikuri digit level]\endcsname/4\relax
+\expandafter\expandafter\expandafter\ifx\csname[rikuri num to cnnum last]\endcsname 0\relax
+\ifnum\csname[rikuri remainder]\endcsname=1\relax
+\else
+%不为1时，也就是上一个0不在个、万、亿等位。一十万不说一十零万
+\csname[rikuri cnnum format]\endcsname=\expandafter{
+\csname[rikuri cn\the\csname[rikuri cncase]\endcsname digit]\expandafter\endcsname\expandafter 0
+\the\csname[rikuri cnnum format]\expandafter\endcsname
+}
+\fi\fi
+%
+\fi
+\csname[rikuri check not digit]\endcsname
+{#1}
+{\csname[rikuri not digit while relax]\endcsname}
+\expandafter\ifx\csname[rikuri not digit while relax]\endcsname\relax
+%
+\ifnum\csname[rikuri digit level]\endcsname=1\relax
+\expandafter\ifx\csname[rikuri num to cnnum last]\endcsname0\relax
+% 整个数值本身就是 0 时
+\csname[rikuri cn\the\csname[rikuri cncase]\endcsname digit]\endcsname 0
+\fi\fi
+%
+\the\csname[rikuri cnnum format]\endcsname
+\else
+\expandafter\let\csname[rikuri num to cnnum last]\endcsname#1
+%
+\csname[rikuri divide]\endcsname\the\csname[rikuri digit level]\endcsname/4\relax
+\ifnum\csname[rikuri remainder]\endcsname=0\relax
+\ifnum\csname[rikuri quotient]\endcsname>0\relax
+\csname[rikuri divide]\endcsname\the\csname[rikuri quotient]\endcsname/2\relax
+\csname[rikuri cnnum format]\endcsname=\expandafter{
+\csname[rikuri cn\the\csname[rikuri cncase]\endcsname carryunit]\expandafter\endcsname
+\the\csname[rikuri remainder]\expandafter\endcsname
+\the\csname[rikuri cnnum format]\endcsname
+}
+\fi\fi
+\ifnum#1>0\relax
+\csname[rikuri divide]\endcsname\the\csname[rikuri digit level]\endcsname/4\relax
+\expandafter\edef\csname[rikuri cndigit+unit]\endcsname{
+\csname[rikuri cn\the\csname[rikuri cncase]\endcsname digit]\endcsname{#1}
+\csname[rikuri cn\the\csname[rikuri cncase]\endcsname unit]\expandafter\endcsname
+\the\csname[rikuri remainder]\endcsname
+}
+\csname[rikuri cnnum format]\endcsname=\expandafter\expandafter\expandafter{
+\csname[rikuri cndigit+unit]\expandafter\endcsname
+\the\csname[rikuri cnnum format]\endcsname
+}
+\fi
+%
+\advance\csname[rikuri digit level]\endcsname by 1\relax
+\csname[rikuri num to cnnum]\expandafter\endcsname% recursive here
+\fi
+}
+\expandafter\gdef\csname[rikuri cnnum with num]\endcsname#1{
+\expandafter\edef\csname[rikuri reversed num]\endcsname{
+#1
+\csname[rikuri reversed num]\endcsname
+}
+\csname[rikuri cnnum]\endcsname
+}
+
+\expandafter\gdef\csname[rikuri check not digit]\endcsname#1#2{
+% check if #1 is NOT digit
+% if #1 is digit #2 will be defined to a empty macro
+% if #1 is not digit #2 will be \relax
+% NOTE #1 and #2 !MUST be wrapped by \csname\endcsname
+\expandafter\let#2\relax
+\expandafter\ifx#11\expandafter\def#2{}\else
+\expandafter\ifx#12\expandafter\def#2{}\else
+\expandafter\ifx#13\expandafter\def#2{}\else
+\expandafter\ifx#14\expandafter\def#2{}\else
+\expandafter\ifx#15\expandafter\def#2{}\else
+\expandafter\ifx#16\expandafter\def#2{}\else
+\expandafter\ifx#17\expandafter\def#2{}\else
+\expandafter\ifx#18\expandafter\def#2{}\else
+\expandafter\ifx#19\expandafter\def#2{}\else
+\expandafter\ifx#10\expandafter\def#2{}\else
+\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+}
+
+\expandafter\gdef\csname[rikuri cnnumdigit]\endcsname#1{\ifcase#1{零}\or{一}\or{二}\or{三}\or{四}\or{五}\or{六}\or{七}\or{八}\or{九}\fi}
+\expandafter\gdef\csname[rikuri cnnumzdigit]\endcsname#1{\ifcase#1{〇}\or{一}\or{二}\or{三}\or{四}\or{五}\or{六}\or{七}\or{八}\or{九}\fi}
+\expandafter\gdef\csname[rikuri cnNUMdigit]\endcsname#1{\ifcase#1{零}\or{壹}\or{贰}\or{叁}\or{肆}\or{伍}\or{陆}\or{柒}\or{捌}\or{玖}\fi}
+\expandafter\gdef\csname[rikuri cnNUMzdigit]\endcsname#1{\ifcase#1{〇}\or{壹}\or{贰}\or{叁}\or{肆}\or{伍}\or{陆}\or{柒}\or{捌}\or{玖}\fi}
+\expandafter\gdef\csname[rikuri cnnumunit]\endcsname#1{\ifcase#1{}\or{十}\or{百}\or{千}\fi}
+\global\expandafter\let\csname[rikuri cnnumzunit]\expandafter\endcsname\csname[rikuri cnnumunit]\endcsname
+\expandafter\gdef\csname[rikuri cnNUMunit]\endcsname#1{\ifcase#1{}\or{拾}\or{佰}\or{仟}\fi}
+\global\expandafter\let\csname[rikuri cnNUMzunit]\expandafter\endcsname\csname[rikuri cnNUMunit]\endcsname
+\expandafter\gdef\csname[rikuri cnnumcarryunit]\endcsname#1{\ifcase#1{亿}\or{万}\fi}
+\global\expandafter\let\csname[rikuri cnnumzcarryunit]\expandafter\endcsname\csname[rikuri cnnumcarryunit]\endcsname
+\global\expandafter\let\csname[rikuri cnNUMcarryunit]\expandafter\endcsname\csname[rikuri cnnumcarryunit]\endcsname
+\global\expandafter\let\csname[rikuri cnNUMzcarryunit]\expandafter\endcsname\csname[rikuri cnnumcarryunit]\endcsname
+\endgroup%

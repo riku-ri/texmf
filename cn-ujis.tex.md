@@ -4,6 +4,8 @@
 
 一些中文排版的配置
 
+---
+
 luatexja 本身包含一些基本的 box+glue 配置组合，
 并以 jfm 的形式加载，
 该配置文件 [`tex/cn-ujis.tex`](tex/cn-ujis.tex) 只适用于 `jfm=ujis` 时的排版环境
