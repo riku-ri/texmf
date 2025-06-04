@@ -2,21 +2,23 @@
 \begingroup\endlinechar=-1%
 \global\expandafter\newdimen\csname`dimen`\endcsname
 \global\expandafter\let\csname'dimen'\expandafter\endcsname\csname`dimen`\endcsname
-\gdef\`{\expandafter\futurelet\csname`next\expandafter\endcsname\csname maybe`\endcsname}
+\gdef\`{~\csname``\endcsname}
+\expandafter\gdef\csname``\endcsname{\expandafter\futurelet\csname`next\expandafter\endcsname\csname maybe`\endcsname}
 \expandafter\gdef\csname maybe`\endcsname{
 ‘
-\expandafter\ifx\csname`next\endcsname\egroup\relax
-\else\expandafter\ifx\csname`next\endcsname\bgroup\relax
+\expandafter\ifx\csname`next\endcsname\egroup
+\else\expandafter\ifx\csname`next\endcsname\bgroup
 \else\csname recursive`\expandafter\expandafter\expandafter\endcsname
 \fi\fi
 }
 \long\expandafter\gdef\csname recursive`\endcsname#1{
 \csname`dimen`\endcsname=1em\divide\csname`dimen`\endcsname by 3
-\ifx`#1\kern-\csname`dimen`\endcsname\expandafter\`%recursive here
-\else\ifx\`#1\kern-.5\csname`dimen`\endcsname\fi\expandafter#1
+\ifx`#1\kern-\csname`dimen`\endcsname\csname``\expandafter\endcsname%recursive here
+\else\expandafter\ifx\csname``\endcsname#1\kern-.5\csname`dimen`\endcsname\fi\expandafter#1
 \fi
 }
-\gdef\'{\expandafter\futurelet\csname'next\expandafter\endcsname\csname'maybe\endcsname}
+\gdef\'{\csname''\endcsname}
+\expandafter\gdef\csname''\endcsname{\expandafter\futurelet\csname'next\expandafter\endcsname\csname'maybe\endcsname}
 \expandafter\gdef\csname'maybe\endcsname{
 ’
 \expandafter\ifx\csname'next\endcsname\egroup\relax
@@ -26,8 +28,8 @@
 }
 \long\expandafter\gdef\csname recursive'\endcsname#1{
 \csname'dimen'\endcsname=1em\divide\csname'dimen'\endcsname by 3
-\ifx'#1\kern-\csname'dimen'\endcsname\expandafter\'%recursive here
-\else\ifx\'#1\kern-.5\csname'dimen'\endcsname\fi\expandafter#1
+\ifx'#1\kern-\csname'dimen'\endcsname\csname''\expandafter\endcsname%recursive here
+\else\expandafter\ifx\csname''\endcsname#1\kern-.5\csname'dimen'\endcsname\fi~#1
 \fi
 }
 
