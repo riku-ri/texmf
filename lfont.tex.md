@@ -99,7 +99,7 @@ Latin 字体（`\lfont`）和非Laint字体（`\Lfont`）。
 字体本身需要额外绘制用于数学表达式的符号等等。
 对于后者，往往需要特别制作的数学字体，
 在我的工作环境（Arch Linux, wayland）中，
-这些字体会被 `pacman -Fl texlive-basic | grep cmsy | head` 列出:
+部分字体会被 `pacman -Fl texlive-basic | grep cmsy | head` 列出:
 
 <details>
 <summary>点击此处展开列出的数学字体</summary>
@@ -127,7 +127,7 @@ Latin 字体（`\lfont`）和非Laint字体（`\Lfont`）。
 而不是 `R` 这个字母。
 > 并非只有数学字体会这么做，许多只显示表情、线条的字体也会如此。
 
-这些行为发生在 TeX 的第2、第3族。
+这些行为发生在 TeX 的第1～6族。
 因此一般不建议第2、第3族的字体，
 除非你很清楚它们会像上面描述的那样工作。
 
