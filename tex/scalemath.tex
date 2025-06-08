@@ -9,4 +9,58 @@
 \endgroup
 \vskip 0em\noindent
 }
+\expandafter\gdef\csname cm12\endcsname#1/#2{
+	\expandafter\font\csname #112\endcsname=#110 scaled \magstep1\relax
+	\global\textfont#2\expandafter=\csname #112\endcsname
+}
+\expandafter\gdef\csname true cm12\endcsname#1/#2{
+	\expandafter\font\csname #112\endcsname=#112\relax
+	\global\textfont#2\expandafter=\csname #112\endcsname
+}
+%%\expandafter\font\csname cmr12\endcsname=cmr12\relax
+%%\expandafter\font\csname cmr8\endcsname=cmr8\relax
+%%\textfont0\expandafter=\csname cmr12\endcsname\relax
+%%\scriptfont0\expandafter=\csname cmr8\endcsname\relax
+%%\scriptscriptfont0\expandafter=\csname cmr8\endcsname\relax
+%%\expandafter\font\csname cmr12\endcsname=cmr12\relax
+%%\expandafter\font\csname cmr8\endcsname=cmr8\relax
+%%\csname true cm12\endcsname cmmi/1\relax
+%%\csname cm12\endcsname cmsy/2\relax
+%%\csname cm12\endcsname cmex/3\relax
+%%\csname true cm12\endcsname cmti/\itfam\relax
+%%\csname true cm12\endcsname cmsl/\slfam\relax
+%%\csname true cm12\endcsname cmbx/\bffam\relax
+
+\gdef\bigmu#1*#2{
+	\begingroup\endlinechar=-1\catcode"09=\catcode0\relax%<TAB>,9,'011"09
+	\muskip0=#2\relax
+	\muskip1=#2\relax
+	\count0=#1\advance\count0 by -1000\relax
+	\multiply\muskip0 by 1000\relax
+	\multiply\muskip1 by \count0\relax
+	\advance\muskip0 by \muskip1\relax
+	\divide\muskip0 by 1000\relax
+	\global#2=\muskip0\relax
+	\endgroup
+}
+\gdef\bigdi#1*#2{
+	\begingroup\endlinechar=-1\catcode"09=\catcode0\relax%<TAB>,9,'011"09
+	\dimen0=#2\relax
+	\dimen1=#2\relax
+	\count0=#1\advance\count0 by -1000\relax
+	\multiply\dimen0 by 1000\relax
+	\multiply\dimen1 by \count0\relax
+	\advance\dimen0 by \dimen1\relax
+	\divide\dimen0 by 1000\relax
+	\global#2=\dimen0\relax
+	\endgroup
+}
+
+%%\bigmu1440*\thinmuskip\relax
+%%\bigmu1440*\medmuskip\relax
+%%\bigmu1440*\thickmuskip\relax
+%%
+%%\bigdi1440*\nulldelimiterspace\relax
+%%\bigdi1440*\delimitershortfall\relax
+%%\bigdi1440*\scriptspace\relax
 \endgroup
