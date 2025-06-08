@@ -27,11 +27,18 @@
 }
 \expandafter\gdef\csname chalign halign\endcsname#1#2{{
 \divide\jot by 1000\multiply\jot by \csname chalign baseline scale\endcsname
-$$
-\openup1\jot\vbox{\halign{#1
-#2
-}}
-$$
+\expandafter\let\csname begin math\endcsname$
+\expandafter\let\csname begin math\endcsname$
+\ifmmode
+\expandafter\let\csname begin vmath\endcsname\relax
+\else
+\expandafter\def\csname begin vmath\endcsname{
+\csname begin math\expandafter\endcsname\csname begin math\endcsname
+}
+\fi
+\csname begin vmath\endcsname
+\openup1\jot\vbox{\halign{#1#2}}
+\csname begin vmath\endcsname
 }}
 
 \endgroup%
