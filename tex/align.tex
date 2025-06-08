@@ -1,0 +1,37 @@
+\begingroup\endlinechar=-1\catcode"09=\catcode0\relax%<TAB>,9,'011"09
+
+\newcount\listcount\gdef\addlist{\global\advance\listcount by 1\relax}
+\newcount\sublistcount\gdef\addsublist{\advance\listsubcount by 1\relax}
+\gdef\cnlist{
+	\global\addlist〈\expandafter\cnnum\the\listcount〉
+}
+\expandafter\newcount\csname chalign baseline scale\endcsname
+\csname chalign baseline scale\endcsname=0\relax
+\gdef\chalign#1{\listcount=0
+\ifx#1\magstep
+%XXX: This if is to make suitable to use \magstep
+%   : this is because \magstep leave a \relax at the end
+%   : and \magstep0 is a macro \@m but not a number like other \magstep
+%   : so \magstep0 make different behavior to others here
+%   : so cannot try to skip \relax in the nex macro
+%   : can only distinguish them instead
+\expandafter\afterassignment\csname chalign with\string\magstep\endcsname
+\else
+\expandafter\afterassignment\csname chalign halign\endcsname
+\fi
+\csname chalign baseline scale\endcsname=#1
+}
+\expandafter\gdef\csname chalign with\string\magstep\endcsname#1\relax#2#3{
+#1
+\csname chalign halign\endcsname{#2}{#3}
+}
+\expandafter\gdef\csname chalign halign\endcsname#1#2{{
+\divide\jot by 1000\multiply\jot by \csname chalign baseline scale\endcsname
+$$
+\openup1\jot\vbox{\halign{#1
+#2
+}}
+$$
+}}
+
+\endgroup%

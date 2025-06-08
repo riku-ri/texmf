@@ -1,0 +1,12 @@
+\input ifinput.tex
+\ifinput tikz.tex
+\gdef\bigvmath#1{
+\vskip 0em
+\begingroup
+\setbox0=\vbox{#1}
+\dimen0=\hsize\divide\dimen0 by 10
+\hbox{\hskip-\dimen0\tikz\draw (0,0) node[scale=1.2]{\box0} ;}
+\endgroup
+\vskip 0em\noindent
+}
+\endgroup
