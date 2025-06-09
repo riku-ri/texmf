@@ -8,21 +8,24 @@
 %
 \gdef\markexp#1{
 \expandafter\ifx\csname mathexp marked #1\endcsname\relax
-	\global\advance\csname mathexp count\endcsname by 1
-	\hbox to 0ex{
-		\qquad
-		{\csname mathexp ft\endcsname(\the\csname mathexp count\endcsname)}
-		\hss
-	}
-\expandafter\xdef\csname mathexp marked #1 count\endcsname{\the\csname mathexp count\endcsname}
-\expandafter\gdef\csname mathexp marked #1\endcsname{
-{\csname mathexp ft\endcsname(\csname mathexp marked #1 count\endcsname)}
-}
+\csname mark new exp\endcsname{#1}
 \else
 \csname mathexp marked #1\endcsname
 \fi
 }
-
+\expandafter\gdef\csname mark new exp\endcsname#1{
+\ifmmode\else\errmessage{[\string\markexp] cannot mark a new exp outside math mode}\fi
+\global\advance\csname mathexp count\endcsname by 1
+\hbox to 0ex{
+	\qquad
+	{\csname mathexp ft\endcsname(\the\csname mathexp count\endcsname)}
+	\hss
+}
+\expandafter\xdef\csname mathexp marked #1 count\endcsname{\the\csname mathexp count\endcsname}
+\expandafter\gdef\csname mathexp marked #1\endcsname{
+	{\csname mathexp ft\endcsname(\csname mathexp marked #1 count\endcsname)}
+}
+}
 
 \expandafter\newbox\csname math lr box\endcsname
 \gdef\(#1{% better \left

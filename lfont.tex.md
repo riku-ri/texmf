@@ -131,21 +131,28 @@ Latin 字体（`\lfont`）和非Laint字体（`\Lfont`）。
 因此一般不建议第2、第3族的字体，
 除非你很清楚它们会像上面描述的那样工作。
 
-另外，
-luatexja 本身并不支持数学环境下的 CJK 上下标。
-因此即使设置了 `\Lscriptfont` 也无法使用 `$anyway^{失望的是}$` 。
-目前而言， `\Lscriptfont` 和 `\Lscriptscriptfont` 其实是*无用*的指令。
+另外， luatexja 对于数学排版时的字体使用有一些限制，
+luatexja 中提到：
+> We (the project members of LuaTEX-ja) think
+> that using Japanese characters in math mode are allowed if
+> and only if these are used as identifiers. In this point of view,
 
----
----
+> LuaTeX-ja プロジェクトでは，
+> 数式モード中での和文文字はそれらが識別子として用いられるとき
+> のみ許されると考えている．この観点から
 
-数学环境下的排版包含着数不清的细节，
-实际上，在数学环境中，我建议始终设置并使用最初的、和谐的非 Latin 字体，
-除此之外不再改动。
-到了不得不让它更大时，将整个数学盒子放大会是更好的选择。
+总之，上下标需要脱离数学模式才能正常显示。
+一般来说使用一个 box 即可解决。
 
----
----
+数学环境下的排版包含着数不清的细节。
+如果你准备放大或缩小数学字体，
+也将准备着调整一系列上下左右上上下下的间距。
+
+因此，一个投机取巧的做法是，
+放大整个未做任何调整的数学盒子。
+
+[`tex/scalemath.tex`](tex/scalemath.tex)
+中给出了一个使用 tikz 的、陈列模式的样例。
 
 #### 一些无用的技巧
 
