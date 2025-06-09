@@ -14,7 +14,6 @@
 \fi
 }
 \expandafter\gdef\csname mark new exp\endcsname#1{
-\ifmmode\else\errmessage{[\string\markexp] cannot mark a new exp outside math mode}\fi
 \global\advance\csname mathexp count\endcsname by 1
 \hbox to 0ex{
 	\qquad
