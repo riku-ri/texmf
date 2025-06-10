@@ -27,13 +27,13 @@
 }
 
 \expandafter\newbox\csname math lr box\endcsname
-\gdef\(#1{% better \left
+\gdef\mlt#1{% better \left
 \expandafter\def\csname math left\endcsname{\csname math left right\endcsname#1}
 \begingroup
 \setbox\csname math lr box\endcsname=\hbox\bgroup
 \expandafter\aftergroup\csname math left\endcsname
 }
-\gdef\)#1{% better \right
+\gdef\mrt#1{% better \right
 \egroup
 #1
 \endgroup
@@ -48,7 +48,8 @@
 \dimen2=1em\advance\dimen2 by2\jot\multiply\dimen2 by\count0
 \dimen1=\ht\csname math lr box\endcsname\advance\dimen1 by-\dimen2
 \dimen0=\ht\csname math lr box\endcsname
-\left#1\vbox to\dimen1{\box\csname math lr box\endcsname\vss}\right#2
+\ifdim\dimen0<\dimen1\dimen1=\dimen0\fi
+\left#1\vbox to\dimen1{\box\csname math lr box\endcsname}\right#2
 }}
 
 \endgroup%
