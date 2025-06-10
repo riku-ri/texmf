@@ -49,7 +49,7 @@
 \dimen1=\ht\csname math lr box\endcsname\advance\dimen1 by-\dimen2
 \dimen0=\ht\csname math lr box\endcsname
 \ifdim\dimen0<\dimen1\dimen1=\dimen0\fi
-\left#1\vbox to\dimen1{\box\csname math lr box\endcsname}\right#2
+\left#1\vbox to\dimen1{\hbox{\hss\unhbox\csname math lr box\endcsname\hss}}\right#2
 }}
 
 \endgroup%
