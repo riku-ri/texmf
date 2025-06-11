@@ -42,7 +42,7 @@
 \endgroup
 }
 \expandafter\gdef\csname math left right\endcsname#1#2{{
-\setbox0=\hbox{\the\toks0}
+\setbox0=\hbox{$\the\toks0$}
 \dimen0=\ht0
 \dimen1=1em\advance\dimen1 by2\jot % up jot and down jot
 \divide\dimen0 by\dimen1
@@ -51,8 +51,9 @@
 \advance\count0 by -1 % \left \right work fine for only 1 line
 \dimen2=1em\advance\dimen2 by2\jot\multiply\dimen2 by\count0
 \dimen1=\ht0\advance\dimen1 by-\dimen2
-\ifdim\ht0<\dimen1\dimen1=\the\ht0\fi
-\left#1\vbox to\dimen1{\hbox{\the\toks0}}\right#2
+\dimen0=\ht0
+\ifdim\ht0<\dimen1\dimen1=\ht0\fi
+\left#1\vbox to\dimen1{\hbox{\hss$\the\toks0$\hss}\vss}\right#2
 }}
 
 \endgroup%
