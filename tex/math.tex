@@ -26,34 +26,34 @@
 }
 }
 
-\long\expandafter\gdef\csname math lr delay\endcsname#1\mrt{
-\toks0={#1}
-\mrt
-}
-\gdef\mlt#1{% better \left
-\begingroup
-\expandafter\let\csname math left\endcsname#1
-\catcode`\#=12
-\csname math lr delay\endcsname
-}
-\gdef\mrt#1{% better \right
-\catcode`\#=6
-\csname math left right\expandafter\endcsname\csname math left\endcsname#1
-\endgroup
-}
-\expandafter\gdef\csname math left right\endcsname#1#2{{
-\setbox0=\hbox{$\the\toks0$}
-\dimen0=\ht0
-\dimen1=1em\advance\dimen1 by2\jot % up jot and down jot
-\divide\dimen0 by\dimen1
-\count0=\dimen0 % l=<line count> \count0==(2l-1), etc 1,3,5,7,9,...
-\advance\count0 by 1\divide\count0 by 2 % line count of \box0
-\advance\count0 by -1 % \left \right work fine for only 1 line
-\dimen2=1em\advance\dimen2 by2\jot\multiply\dimen2 by\count0
-\dimen1=\ht0\advance\dimen1 by-\dimen2
-\dimen0=\ht0
-\ifdim\ht0<\dimen1\dimen1=\ht0\fi
-\left#1\vbox to\dimen1{\hbox{\hss$\the\toks0$\hss}\vss}\right#2
-}}
+%%\long\expandafter\gdef\csname math lr delay\endcsname#1\mrt{
+%%\toks0={#1}
+%%\mrt
+%%}
+%%\gdef\mlt#1{% better \left
+%%\begingroup
+%%\expandafter\let\csname math left\endcsname#1
+%%\catcode`\#=12
+%%\csname math lr delay\endcsname
+%%}
+%%\gdef\mrt#1{% better \right
+%%\catcode`\#=6
+%%\csname math left right\expandafter\endcsname\csname math left\endcsname#1
+%%\endgroup
+%%}
+%%\expandafter\gdef\csname math left right\endcsname#1#2{{
+%%\setbox0=\hbox{$\the\toks0$}
+%%\dimen0=\ht0
+%%\dimen1=1em\advance\dimen1 by2\jot % up jot and down jot
+%%\divide\dimen0 by\dimen1
+%%\count0=\dimen0 % l=<line count> \count0==(2l-1), etc 1,3,5,7,9,...
+%%\advance\count0 by 1\divide\count0 by 2 % line count of \box0
+%%\advance\count0 by -1 % \left \right work fine for only 1 line
+%%\dimen2=1em\advance\dimen2 by2\jot\multiply\dimen2 by\count0
+%%\dimen1=\ht0\advance\dimen1 by-\dimen2
+%%\dimen0=\ht0
+%%\ifdim\ht0<\dimen1\dimen1=\ht0\fi
+%%\left#1\vbox to\dimen1{\hbox{\hss$\the\toks0$\hss}\vss}\right#2
+%%}}
 
 \endgroup%
