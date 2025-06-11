@@ -26,30 +26,31 @@
 }
 }
 
-\expandafter\newbox\csname math lr box\endcsname
+\expandafter\gdef\csname math lr delay\endcsname#1\mrt{
+\expandafter\def\csname math lr def\endcsname{#1}\mrt
+}
 \gdef\mlt#1{% better \left
-\expandafter\def\csname math left\endcsname{\csname math left right\endcsname#1}
 \begingroup
-\setbox\csname math lr box\endcsname=\hbox\bgroup
-\expandafter\aftergroup\csname math left\endcsname
+\expandafter\let\csname math left\endcsname#1
+\csname math lr delay\endcsname
 }
 \gdef\mrt#1{% better \right
-\egroup
-#1
+\csname math left right\expandafter\endcsname\csname math left\endcsname#1
 \endgroup
 }
 \expandafter\gdef\csname math left right\endcsname#1#2{{
-\dimen0=\ht\csname math lr box\endcsname
+\setbox0=\hbox{\csname math lr def\endcsname}
+\dimen0=\ht0
 \dimen1=1em\advance\dimen1 by2\jot % up jot and down jot
 \divide\dimen0 by\dimen1
 \count0=\dimen0 % l=<line count> \count0==(2l-1), etc 1,3,5,7,9,...
 \advance\count0 by 1\divide\count0 by 2 % line count of \box0
 \advance\count0 by -1 % \left \right work fine for only 1 line
 \dimen2=1em\advance\dimen2 by2\jot\multiply\dimen2 by\count0
-\dimen1=\ht\csname math lr box\endcsname\advance\dimen1 by-\dimen2
-\dimen0=\ht\csname math lr box\endcsname
+\dimen1=\ht0\advance\dimen1 by-\dimen2
+\dimen0=\ht0
 \ifdim\dimen0<\dimen1\dimen1=\dimen0\fi
-\left#1\vbox to\dimen1{\hbox{\hss\unhbox\csname math lr box\endcsname\hss}}\right#2
+\left#1\vbox to\dimen1{\hbox{$\csname math lr def\endcsname$}}\right#2
 }}
 
 \endgroup%
