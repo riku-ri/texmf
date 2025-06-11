@@ -26,20 +26,23 @@
 }
 }
 
-\expandafter\gdef\csname math lr delay\endcsname#1\mrt{
-\expandafter\def\csname math lr def\endcsname{#1}\mrt
+\long\expandafter\gdef\csname math lr delay\endcsname#1\mrt{
+\toks0={#1}
+\mrt
 }
 \gdef\mlt#1{% better \left
 \begingroup
 \expandafter\let\csname math left\endcsname#1
+\catcode`\#=12
 \csname math lr delay\endcsname
 }
 \gdef\mrt#1{% better \right
+\catcode`\#=6
 \csname math left right\expandafter\endcsname\csname math left\endcsname#1
 \endgroup
 }
 \expandafter\gdef\csname math left right\endcsname#1#2{{
-\setbox0=\hbox{\csname math lr def\endcsname}
+\setbox0=\hbox{\the\toks0}
 \dimen0=\ht0
 \dimen1=1em\advance\dimen1 by2\jot % up jot and down jot
 \divide\dimen0 by\dimen1
@@ -50,7 +53,7 @@
 \dimen1=\ht0\advance\dimen1 by-\dimen2
 \dimen0=\ht0
 \ifdim\dimen0<\dimen1\dimen1=\dimen0\fi
-\left#1\vbox to\dimen1{\hbox{$\csname math lr def\endcsname$}}\right#2
+\left#1\vbox to\dimen1{\hbox{$\the\toks0$}}\right#2
 }}
 
 \endgroup%
