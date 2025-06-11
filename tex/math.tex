@@ -22,7 +22,7 @@
 }
 \expandafter\xdef\csname mformula marked #1 count\endcsname{\the\csname mformula count\endcsname}
 \expandafter\gdef\csname mformula marked #1\endcsname{
-	{\csname mformula ft\endcsname(\csname mformula marked #1 count\endcsname)}
+	\hbox{\csname mformula ft\endcsname(\csname mformula marked #1 count\endcsname)}
 }
 }
 
