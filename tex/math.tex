@@ -17,12 +17,12 @@
 \global\advance\csname mformula count\endcsname by 1
 \hbox to 0ex{
 	\qquad
-	{\csname mformula ft\endcsname(\the\csname mformula count\endcsname)}
+	{\csname mformula ft\endcsname(\the\csname mformula count\endcsname\/)}
 	\hss
 }
 \expandafter\xdef\csname mformula marked #1 count\endcsname{\the\csname mformula count\endcsname}
 \expandafter\gdef\csname mformula marked #1\endcsname{
-	\hbox{\csname mformula ft\endcsname(\csname mformula marked #1 count\endcsname)}
+	\hbox{\csname mformula ft\endcsname(\csname mformula marked #1 count\endcsname\/)}
 }
 }
 
