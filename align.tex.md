@@ -6,8 +6,5 @@
 
 ### 用法
 
-- `\chalign`  
-	`\chalign{#1}{#2}`将得到一个`\haling{#1#2}`且垂直居中的盒子，例如：
-	```
-	\chalign{$#$&\quad\hss#\hss\cr}{here&there}
-	```
+- `\display`  
+	简单粗暴的将任意内容放在垂直盒子里再以陈列格式排版

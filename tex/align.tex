@@ -7,7 +7,7 @@
 }
 \expandafter\newcount\csname chalign baseline scale\endcsname
 \csname chalign baseline scale\endcsname=0\relax
-\gdef\chalign#1{\listcount=0
+\gdef\display#1{\listcount=0
 \ifx#1\magstep
 %XXX: This if is to make suitable to use \magstep
 %   : this is because \magstep leave a \relax at the end
@@ -21,11 +21,11 @@
 \fi
 \csname chalign baseline scale\endcsname=#1
 }
-\expandafter\gdef\csname chalign with\string\magstep\endcsname#1\relax#2#3{
+\expandafter\gdef\csname chalign with\string\magstep\endcsname#1\relax#2{
 #1
-\csname chalign halign\endcsname{#2}{#3}
+\csname chalign halign\endcsname{#2}
 }
-\expandafter\gdef\csname chalign halign\endcsname#1#2{{
+\expandafter\gdef\csname chalign halign\endcsname#1{{
 \divide\jot by 1000\multiply\jot by \csname chalign baseline scale\endcsname
 \expandafter\let\csname begin math\endcsname$
 \expandafter\let\csname begin math\endcsname$
@@ -37,7 +37,7 @@
 }
 \fi
 \csname begin vmath\endcsname
-\vcenter{\openup1\jot\vbox{\halign{#1#2}}}
+\openup1\jot\vbox{#1}
 \csname begin vmath\endcsname
 }}
 

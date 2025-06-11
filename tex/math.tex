@@ -3,6 +3,7 @@
 \global\csname mformula count\endcsname=0\relax
 %
 \expandafter\gdef\csname mformula ft\endcsname{\csname ui\endcsname}
+\global\expandafter\let\csname mformulaft\expandafter\endcsname\csname mformula ft\endcsname
 %NOTE: 这里的 \ui 字体来源于我个人自用的字体配置文件。未加载时这里会是 \relax
 % cannot define in \mformula because this format is not always used immediately
 %
@@ -22,7 +23,7 @@
 }
 \expandafter\xdef\csname mformula marked #1 count\endcsname{\the\csname mformula count\endcsname}
 \expandafter\gdef\csname mformula marked #1\endcsname{
-	\hbox{\csname mformula ft\endcsname(\csname mformula marked #1 count\endcsname\/)}
+	\hbox{\csname mformula ft\endcsname\csname mformula marked #1 count\endcsname\/}
 }
 }
 
