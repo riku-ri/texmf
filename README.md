@@ -30,3 +30,11 @@ this repository provide some TeX package.
 	- 同样与数学相关的内容，但使用了 tikz 因此与上一项分开
 	- 目前只是一个简单的示例，
 		将`$`内完全的数学内容作为参数传给`\bigvmath`即可
+- [`tex/vlines.tex`](tex/vlines.tex)
+  > [`vlines.tex.md`](`vlines.tex.md`)
+  - Generate fixed width for vertical lines
+    - For example, for 2 lines: *here*, *there*:
+      - Generally `\vbox{here\par there}` will generate a page-width box
+      - While `\vlines{here}{there}` will generate a 5ex-width box
+        - The width is max width among all lines,
+          here is *5ex = max width amoung `here` and `there`*

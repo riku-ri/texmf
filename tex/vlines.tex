@@ -1,0 +1,39 @@
+\begingroup\endlinechar=-1\catcode"09=\catcode0\relax%<TAB>,9,'011"09
+
+\gdef\vlines{
+\parindent=0pt\relax
+\def\toset{\count0}\toset=0\relax
+\def\maxset{\count1}\maxset=0\relax
+\def\maxwd{\dimen0}\maxwd=0ex\relax
+\csname[vlines back]\endcsname
+}
+\expandafter\gdef\csname[vlines back]\endcsname{
+\expandafter\futurelet\csname[bgroup?]\expandafter\endcsname
+\csname[vlines begin rec]\endcsname
+}
+\expandafter\gdef\csname[vlines begin rec]\endcsname{
+\expandafter\ifx\csname[bgroup?]\endcsname\bgroup\relax
+\csname[vlines max wd]\expandafter\endcsname
+\else
+\maxset=\toset\relax\toset=0\relax
+\vbox{
+\hsize=\maxwd\csname[vlines lines]\endcsname}
+\fi
+}
+\expandafter\gdef\csname[vlines max wd]\endcsname#1{
+\advance\toset by 1\relax
+\toks\toset={\strut#1}
+\setbox0=\hbox{#1}\ifdim\maxwd<\wd0\relax\maxwd=\wd0\relax\fi
+\csname[vlines back]\endcsname
+}
+\expandafter\gdef\csname[vlines lines]\expandafter\endcsname{
+\advance\toset by 1\relax
+\ifnum\toset=\maxset\relax
+\the\toks\toset
+\else
+\the\toks\toset\hfil\break\relax
+\csname[vlines lines]\endcsname
+\fi
+}
+
+\endgroup%
