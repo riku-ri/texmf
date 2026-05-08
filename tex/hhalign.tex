@@ -1,0 +1,27 @@
+\begingroup\endlinechar=-1\catcode"09=\catcode0\relax%<TAB>,9,'011"09
+\expandafter\newtoks\csname[halign head without&]\endcsname
+\expandafter\newtoks\csname[halign tail]\endcsname
+
+\gdef\hhalign#1#2#3{
+\csname[halign head without&]\endcsname={#3}
+\expandafter\let\expandafter#1\csname[halign head without&]\endcsname
+\expandafter\let\expandafter#2\csname[halign tail]\endcsname
+\csname[hhalign back]\endcsname
+}
+\expandafter\gdef\csname[hhalign back]\endcsname{
+\expandafter\futurelet\csname[bgroup?]\expandafter\endcsname
+\csname[hhalign begin rec]\endcsname
+}
+\expandafter\gdef\csname[hhalign begin rec]\endcsname{
+\expandafter\ifx\csname[bgroup?]\endcsname\bgroup\relax
+\csname[hhalign add tail]\expandafter\endcsname
+\fi
+}
+\expandafter\gdef\csname[hhalign add tail]\endcsname#1{
+\csname[halign tail]\expandafter\endcsname\expandafter=\expandafter{
+\the\csname[halign tail]\endcsname#1
+}
+\csname[hhalign back]\endcsname
+}
+
+\endgroup%
